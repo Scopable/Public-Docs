@@ -1,0 +1,51 @@
+---
+title: "Connect CDW to Scopable"
+sidebarTitle: "CDW"
+description: "Connect your CDW reseller account to pull live product catalog, pricing, and real-time availability into Scopable's Quote Wizard at the time of quoting."
+---
+
+The CDW integration connects your CDW account and pulls live product catalog, pricing, and availability into Scopable's Quote Wizard. With CDW connected, your team can search CDW products at your account pricing and include them in quotes without leaving Scopable.
+
+## What you get
+
+<CardGroup cols={2}>
+  <Card title="CDW Catalog Search" icon="magnifying-glass">
+    Search the CDW product catalog directly inside Quote Wizard when building a quote.
+  </Card>
+  <Card title="Live Pricing & Availability" icon="tag">
+    Pricing and stock availability are fetched at quote time, reflecting your CDW account pricing and current inventory.
+  </Card>
+</CardGroup>
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- A **CDW reseller account** with API access provisioned
+- Your **Subscription Key** and **Customer Account Number** — see Step 1 below
+- **Admin** permissions in Scopable
+
+## Connect CDW
+
+<Steps>
+  <Step title="Obtain your CDW API credentials">
+    Contact CDW to request API access for your reseller account, or log in to **CDW.com** and navigate to the **API Portal**. From there, obtain your **Subscription Key** and confirm your **Customer Account Number**.
+  </Step>
+  <Step title="Open the CDW integration in Scopable">
+    In Scopable, go to **Settings → Integrations → CDW** and click **Connect**.
+  </Step>
+  <Step title="Enter your credentials">
+    Enter your **Subscription Key**, **Customer Account Number**, and select the **Environment** — choose **Production** for live CDW data or **Sandbox** for testing. Click **Connect**.
+  </Step>
+  <Step title="Validation and catalog sync">
+    Scopable validates your credentials against the CDW API and begins syncing catalog data. Once validation completes, CDW products are searchable in Quote Wizard.
+  </Step>
+</Steps>
+
+## After connecting
+
+**Quote Wizard** — CDW appears as a selectable catalog source. Product searches return live-priced results at your CDW account rates along with current availability at the time of quoting.
+
+<Note>
+  The CDW integration is currently in **Alpha** and available to a limited group of Scopable accounts. If you'd like access, contact [support@scopable.com](mailto:support@scopable.com) to join the early-access program.
+</Note>

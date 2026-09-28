@@ -1,0 +1,161 @@
+---
+title: "Archive and Restore Contacts via the Scopable API"
+sidebarTitle: "Archive & Restore"
+description: "Archive hides a contact from active views and clears its default flag. Restore brings it back. Neither action permanently deletes PSA-synced contacts."
+---
+
+Scopable uses archiving rather than deletion to manage contacts you no longer want to see in active views. Archiving a contact hides it throughout the Scopable app and clears its default-contact flag if it was set — but the record is preserved and can be restored at any time. This matters especially for contacts that are mirrored from your PSA: deleting them permanently is not possible through the API, and attempting to do so would put your tenant out of sync with your PSA. All three endpoints in this section require the `contacts:write` scope and an `Idempotency-Key` header.
+
+## Archive a Contact
+
+Archiving hides the contact from active client views, removes it as the client's default contact (if applicable), and sets its `archivedAt` timestamp. The contact remains in Scopable's database and can be restored at any time.
+
+### Endpoint
+
+```
+POST https://api.scopable.io/v1/contacts/{contactId}/archive
+```
+
+### Path Parameters
+
+<ParamField path="contactId" type="string" required>
+  The UUID of the contact to archive.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X POST "https://api.scopable.io/v1/contacts/abc123/archive" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: archive-ada-001" \
+  -d '{}'
+```
+
+### Example Response
+
+```json
+{
+  "id": "abc123",
+  "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Ada Lovelace",
+  "email": "[email protected]",
+  "phone": null,
+  "title": "Technical Director",
+  "isDefault": false,
+  "archivedAt": "2026-09-22T08:00:00Z",
+  "createdAt": "2026-09-20T09:41:57Z",
+  "updatedAt": "2026-09-22T08:00:00Z"
+}
+```
+
+---
+
+## Restore a Contact
+
+Restoring brings an archived contact back to active status. Its `archivedAt` field is cleared. The contact does **not** automatically reclaim the default-contact position — use [set-default](#set-as-default-contact) if you want to promote it again.
+
+### Endpoint
+
+```
+POST https://api.scopable.io/v1/contacts/{contactId}/restore
+```
+
+### Path Parameters
+
+<ParamField path="contactId" type="string" required>
+  The UUID of the archived contact to restore.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X POST "https://api.scopable.io/v1/contacts/abc123/restore" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: restore-ada-001" \
+  -d '{}'
+```
+
+### Example Response
+
+```json
+{
+  "id": "abc123",
+  "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Ada Lovelace",
+  "email": "[email protected]",
+  "phone": null,
+  "title": "Technical Director",
+  "isDefault": false,
+  "archivedAt": null,
+  "createdAt": "2026-09-20T09:41:57Z",
+  "updatedAt": "2026-09-22T09:15:42Z"
+}
+```
+
+---
+
+## Set as Default Contact
+
+Promote a contact to the client's primary contact. If another contact is currently the default, Scopable automatically demotes it when you promote the new one. You can call this on an active contact at any time — it does not need to be archived or restored first.
+
+### Endpoint
+
+```
+POST https://api.scopable.io/v1/contacts/{contactId}/set-default
+```
+
+### Path Parameters
+
+<ParamField path="contactId" type="string" required>
+  The UUID of the contact to promote as the client's default.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X POST "https://api.scopable.io/v1/contacts/abc123/set-default" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: set-default-ada-001" \
+  -d '{}'
+```
+
+### Example Response
+
+```json
+{
+  "id": "abc123",
+  "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Ada Lovelace",
+  "email": "[email protected]",
+  "phone": null,
+  "title": "Technical Director",
+  "isDefault": true,
+  "archivedAt": null,
+  "createdAt": "2026-09-20T09:41:57Z",
+  "updatedAt": "2026-09-22T09:20:11Z"
+}
+```
+
+---
+
+## PSA-Synced Contacts
+
+<Note>
+  Contacts that are mirrored from your PSA (ConnectWise Manage or Halo PSA) are never permanently deleted from Scopable, even if you archive them via the API. Archiving is the correct way to hide these contacts from Scopable views without breaking the sync relationship. If the contact is later reactivated in your PSA, the sync will restore it automatically.
+</Note>
+
+## Error Responses
+
+All three endpoints share the same error response structure:
+
+| HTTP Status | Error Code | Meaning |
+|---|---|---|
+| `401` | `unauthorized` | Missing or invalid API key. |
+| `403` | `forbidden` | Your API key does not have the `contacts:write` scope. |
+| `404` | `not_found` | No contact with that ID exists in your tenant. |
+| `409` | `conflict` | A request with the same `Idempotency-Key` completed with a different body. |
+| `429` | `rate_limited` | You have exceeded 60 write requests per minute. |
+| `503` | `unavailable` | Scopable is temporarily unavailable — retry with backoff. |

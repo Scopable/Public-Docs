@@ -1,0 +1,155 @@
+---
+title: "GET /v1/clients — List All Clients"
+sidebarTitle: "List Clients"
+description: "List all clients in your Scopable tenant using cursor pagination. Pass limit (1–200) and cursor query params to page through results."
+---
+
+The List Clients endpoint returns every client record your API key has access to in your Scopable tenant. Results are ordered by creation date and delivered in pages — use the `nextCursor` value from each response to fetch the next page. This endpoint requires the `clients:read` scope.
+
+## Endpoint
+
+```
+GET https://api.scopable.io/v1/clients
+```
+
+## Query Parameters
+
+<ParamField query="limit" type="integer" default={50}>
+  Number of clients to return per page. Must be between `1` and `200`. Defaults to `50`.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  Pagination cursor returned as `nextCursor` in a previous response. Omit this parameter to start from the first page.
+</ParamField>
+
+## Example Request
+
+```bash
+curl "https://api.scopable.io/v1/clients?limit=25" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+## Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+      "name": "Acme IT",
+      "website": "https://acme.example",
+      "industry": null,
+      "phone": null,
+      "contactEmail": "[email protected]",
+      "contactName": "Ada Lovelace",
+      "address": null,
+      "addressLine2": null,
+      "city": null,
+      "state": null,
+      "zipCode": null,
+      "country": null,
+      "employeeCount": null,
+      "annualRevenue": null,
+      "createdAt": "2026-08-22T14:03:11Z",
+      "updatedAt": "2026-09-20T09:41:57Z"
+    }
+  ],
+  "nextCursor": "eyJ2IjoxfQ"
+}
+```
+
+## Response Fields
+
+### Top-Level
+
+<ResponseField name="data" type="array" required>
+  Array of client objects for the current page.
+</ResponseField>
+
+<ResponseField name="nextCursor" type="string | null">
+  Opaque cursor string to pass as the `cursor` query parameter on your next request. `null` when you have reached the last page.
+</ResponseField>
+
+### Client Object
+
+<ResponseField name="id" type="string" required>
+  Unique UUID identifier for the client within Scopable.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Display name of the client as it appears in Scopable.
+</ResponseField>
+
+<ResponseField name="website" type="string | null">
+  Client's website URL.
+</ResponseField>
+
+<ResponseField name="industry" type="string | null">
+  Industry classification for the client.
+</ResponseField>
+
+<ResponseField name="phone" type="string | null">
+  Primary phone number for the client.
+</ResponseField>
+
+<ResponseField name="contactEmail" type="string | null">
+  Email address of the client's default contact.
+</ResponseField>
+
+<ResponseField name="contactName" type="string | null">
+  Full name of the client's default contact.
+</ResponseField>
+
+<ResponseField name="address" type="string | null">
+  Street address line 1.
+</ResponseField>
+
+<ResponseField name="addressLine2" type="string | null">
+  Street address line 2 (suite, floor, etc.).
+</ResponseField>
+
+<ResponseField name="city" type="string | null">
+  City.
+</ResponseField>
+
+<ResponseField name="state" type="string | null">
+  State or province.
+</ResponseField>
+
+<ResponseField name="zipCode" type="string | null">
+  Postal or ZIP code.
+</ResponseField>
+
+<ResponseField name="country" type="string | null">
+  Country name or ISO code.
+</ResponseField>
+
+<ResponseField name="employeeCount" type="integer | null">
+  Number of employees at the client organization.
+</ResponseField>
+
+<ResponseField name="annualRevenue" type="number | null">
+  Client's annual revenue in your account's default currency.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string" required>
+  ISO 8601 timestamp of when the client was created in Scopable.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string" required>
+  ISO 8601 timestamp of the most recent update to the client record.
+</ResponseField>
+
+## Pagination
+
+Pass the `nextCursor` value from one response as the `cursor` parameter on your next request to advance through pages. When `nextCursor` is `null`, you have retrieved all clients.
+
+```bash
+# Fetch the second page using the cursor from the first response
+curl "https://api.scopable.io/v1/clients?limit=25&cursor=eyJ2IjoxfQ" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+<Note>
+  Clients cannot be created or archived through the API. Client records originate from your connected PSA (ConnectWise Manage or Halo PSA) or are created directly inside the Scopable app.
+</Note>

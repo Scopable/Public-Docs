@@ -1,0 +1,103 @@
+---
+title: "Duplicate a Quote to Reuse Prior Details"
+sidebarTitle: "Duplicate Quotes"
+description: "Create a new draft quote from an existing one — products, quantities, and scope copy over while the quote number, status, and delivery link are reset fresh."
+---
+
+When you need to quote a similar scope for the same client — an annual renewal, a revised option, or a near-identical engagement — duplicating an existing quote saves you from rebuilding from scratch. The duplicate starts as a fresh draft with your prior line items and structure intact, so you only need to make the changes that matter.
+
+## How to Duplicate a Quote
+
+<Steps>
+  <Step title="Open the quote you want to duplicate">
+    Navigate to the client record or go to **Quotes** in the left sidebar. Open
+    the quote you want to use as your starting point. The quote can be in any
+    status — draft, sent, approved, or closed.
+  </Step>
+
+  <Step title="Open the Actions menu">
+    Click the **Actions** menu (the three-dot or kebab menu) in the top-right
+    corner of the quote detail page.
+  </Step>
+
+  <Step title="Select Duplicate">
+    Click **Duplicate** from the Actions menu. Scopable immediately creates a
+    new draft quote and opens it for editing. The original quote is untouched.
+  </Step>
+
+  <Step title="Review and adjust the duplicate">
+    Make any changes to the new draft — update quantities, adjust pricing, or
+    swap out products — before sending it through the approval and delivery flow.
+  </Step>
+</Steps>
+
+## What Copies and What Resets
+
+Understanding exactly what carries over helps you avoid surprises when you open the duplicate.
+
+<Tabs>
+  <Tab title="What is copied">
+    The following fields and settings transfer from the original to the
+    duplicate:
+
+    | Field | Notes |
+    |---|---|
+    | Products | All line items, including part numbers and product names |
+    | Quantities | Per-line quantities as they were in the original |
+    | Scope descriptions | Client-facing line-item text and section narratives |
+    | Template selection | The Quote Designer template applied to the original |
+    | Section structure | Headers, groupings, and ordering of line items |
+  </Tab>
+  <Tab title="What is reset">
+    The following fields are cleared or regenerated so the duplicate behaves
+    like a brand-new quote:
+
+    | Field | Reset to |
+    |---|---|
+    | Quote number | Next sequential number in your account |
+    | Status | Draft |
+    | Sent timestamp | Cleared |
+    | Approved timestamp | Cleared |
+    | Approval status | Not submitted |
+    | Client delivery link | New unique URL generated on first send |
+    | Created date | Current date and time |
+  </Tab>
+</Tabs>
+
+## Common Use Cases
+
+**Annual renewal with updated quantities**
+Duplicate last year's quote, adjust seat counts and pricing for the new term, then send it through your normal approval flow.
+
+**Alternative options for the same scope**
+Duplicate a quote to create an Option A / Option B pair. Adjust products or terms in each, then present both to the client.
+
+**Repeatable service packages**
+If you frequently quote similar managed services bundles, keep a well-structured "master" quote and duplicate it each time a new opportunity comes in.
+
+<Warning>
+  Duplicating a quote does **not** re-fetch pricing from your connected
+  distributor integrations. The costs and sell prices are copied as static
+  values from the original. If distributor rates have changed since the original
+  quote was built, open the duplicate and update pricing manually before
+  submitting for approval or sending to the client.
+</Warning>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Quote Wizard"
+    icon="wand-magic-sparkles"
+    href="/quoting/quote-wizard"
+  >
+    Build a brand-new quote step by step with live distributor pricing.
+  </Card>
+  <Card
+    title="Products Page"
+    icon="magnifying-glass"
+    href="/quoting/products-page"
+  >
+    Search your catalog and distributor feeds to update line items in the duplicate.
+  </Card>
+</CardGroup>

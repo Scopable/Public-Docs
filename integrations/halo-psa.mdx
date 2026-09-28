@@ -1,0 +1,96 @@
+---
+title: "Connect Halo PSA to Scopable"
+sidebarTitle: "Halo PSA"
+description: "Sync Halo PSA clients, sites, contacts, products, assets, opportunities, and contracts into Scopable through a four-step guided connection wizard."
+---
+
+The Halo PSA integration syncs your clients, sites, contacts, products and pricing, assets, opportunities, and contracts into Scopable through a guided four-step wizard. Once connected, Scopable keeps that data current on a regular sync schedule so your quotes, QBRs, and client records always reflect what's in your PSA.
+
+## What Syncs
+
+| Halo PSA Entity | Where It Appears in Scopable |
+|---|---|
+| Customers | Scopable clients (matched via client mappings) |
+| Sites | Client record — Sites tab |
+| Contacts | Client → Contacts tab |
+| Products & pricing | Quote wizard product catalog |
+| Assets | Client → Configurations tab |
+| Opportunities | Client → Opportunities tab |
+| Contracts / Agreements | Client → Agreements tab |
+
+<Note>
+  Scopable has **read-only** access to Halo PSA. It never creates, updates, or deletes records in your Halo instance.
+</Note>
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A Halo PSA account with API credentials enabled
+- An **API client ID and secret** from Halo (see steps below)
+- **Admin** permissions in Scopable (or the **Manage Tenant Settings** permission)
+
+### Generate API Credentials in Halo PSA
+
+<Steps>
+  <Step title="Open the API configuration">
+    In Halo PSA, go to **Configuration → Integrations → API**.
+  </Step>
+  <Step title="Create a new API application">
+    Click **New Application** and give it a name such as `Scopable`. Set the authentication method to **Client Credentials**.
+  </Step>
+  <Step title="Set the required permissions">
+    Grant the application read access to customers, contacts, assets, opportunities, contracts, and the product catalog. Scopable only reads these entities.
+  </Step>
+  <Step title="Copy your credentials">
+    Save the application and copy the **Client ID** and **Client Secret**. Store them somewhere safe — you'll need both during the Scopable connection wizard.
+  </Step>
+</Steps>
+
+<Tip>
+  If your Halo instance uses a custom domain, note the full URL (for example, `https://yourcompany.halopsa.com`) — you'll enter it in the first step of the wizard.
+</Tip>
+
+## Connect Halo PSA to Scopable
+
+<Steps>
+  <Step title="Open the integration settings">
+    In Scopable, go to **Settings → Integrations → Halo PSA** and click **Connect**. The guided connection wizard opens.
+  </Step>
+  <Step title="Enter your Halo tenant URL and credentials">
+    Enter the full URL of your Halo PSA instance — for example:
+
+    ```
+    https://yourcompany.halopsa.com
+    ```
+
+    Then enter the **Client ID** and **Client Secret** you generated in the Halo API configuration.
+  </Step>
+  <Step title="Authorize scopes and select entity types">
+    The wizard presents a list of Halo entity types. Select all the entity types you want Scopable to sync. You can come back and change these selections later from the integration settings.
+  </Step>
+  <Step title="Click Finish">
+    Click **Finish**. Scopable validates your credentials, confirms the scopes, and begins the initial sync. Initial sync duration depends on the size of your Halo dataset.
+  </Step>
+  <Step title="Review client mappings">
+    Once the initial sync completes, navigate to **Settings → Integrations → Halo PSA → Client Mappings** and confirm that your Halo customers have been matched to the correct Scopable clients. See [Client Mappings](/integrations/client-mappings) for full instructions.
+  </Step>
+</Steps>
+
+## Sync Frequency and Manual Re-sync
+
+Scopable syncs Halo PSA data on a regular schedule. To pull the latest data immediately, go to **Settings → Integrations → Halo PSA → Sync Now**.
+
+## Troubleshooting
+
+<Accordion title="Connection failed: unable to reach your Halo instance">
+  Verify that the tenant URL you entered is the full address of your Halo PSA instance, including `https://`. Halo custom domains must be entered in full — for example, `https://helpdesk.yourcompany.com` — rather than a shortened or alias URL.
+</Accordion>
+
+<Accordion title="Connection failed: invalid client credentials">
+  Check that the Client ID and Client Secret match what's shown in **Halo → Configuration → Integrations → API** for the application you created. Secrets are not displayed after initial creation — if you can't retrieve it, regenerate the secret in Halo and re-enter it in Scopable.
+</Accordion>
+
+<Accordion title="Assets or opportunities aren't syncing">
+  Make sure those entity types were selected during the wizard. Go to **Settings → Integrations → Halo PSA → Configure** to review and update which entity types are enabled, then trigger a manual re-sync.
+</Accordion>

@@ -1,0 +1,123 @@
+---
+title: "POST /v1/clients/{clientId} — Update a Client"
+sidebarTitle: "Update Client"
+description: "Update a client's name, website, phone, or address fields. Omitted fields stay unchanged; sending null explicitly clears a field's value."
+---
+
+The Update Client endpoint lets you modify writable fields on an existing client record — such as website, phone number, and address information. Send only the fields you want to change; any field you omit remains exactly as it was. To clear a field entirely, send it explicitly as `null`. This endpoint requires the `clients:write` scope and an `Idempotency-Key` header on every request.
+
+## Endpoint
+
+```
+POST https://api.scopable.io/v1/clients/{clientId}
+```
+
+## Required Headers
+
+| Header | Description |
+|---|---|
+| `Authorization` | `Bearer <your-api-key>` |
+| `Content-Type` | `application/json` |
+| `Idempotency-Key` | A unique string (UUID or descriptive key) that makes this request safe to retry. |
+
+## Path Parameters
+
+<ParamField path="clientId" type="string" required>
+  The UUID of the client to update. Must belong to your Scopable tenant.
+</ParamField>
+
+## Request Body
+
+All fields are optional. Include only the fields you want to change.
+
+<ParamField body="name" type="string">
+  Updated display name for the client. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="website" type="string">
+  Updated website URL. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Updated primary phone number. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="address" type="string">
+  Updated street address line 1. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="addressLine2" type="string">
+  Updated street address line 2. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="city" type="string">
+  Updated city. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="state" type="string">
+  Updated state or province. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="zipCode" type="string">
+  Updated postal or ZIP code. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="country" type="string">
+  Updated country name or ISO code. Send `null` to clear the value.
+</ParamField>
+
+<Note>
+  Sending a field as `null` clears its stored value. Omitting a field entirely leaves its current value unchanged. These are two distinct operations.
+</Note>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.scopable.io/v1/clients/3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: update-acme-website-001" \
+  -d '{"website":"https://acme.example"}'
+```
+
+## Example Response
+
+The endpoint returns the full, updated client object after applying your changes.
+
+```json
+{
+  "id": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Acme IT",
+  "website": "https://acme.example",
+  "industry": "Information Technology",
+  "phone": "+1-555-010-0001",
+  "contactEmail": "[email protected]",
+  "contactName": "Ada Lovelace",
+  "address": "123 Main Street",
+  "addressLine2": "Suite 400",
+  "city": "Austin",
+  "state": "TX",
+  "zipCode": "78701",
+  "country": "US",
+  "employeeCount": 42,
+  "annualRevenue": 5000000,
+  "createdAt": "2026-08-22T14:03:11Z",
+  "updatedAt": "2026-09-20T10:15:33Z"
+}
+```
+
+## Idempotency
+
+Every write to the Scopable API requires an `Idempotency-Key` header. If your request times out or receives a network error, resend it with the **same** `Idempotency-Key` — Scopable will return the original result without applying the update a second time. Use a key that is unique per logical operation (e.g., `update-acme-website-001`) rather than a random UUID each time.
+
+## Error Responses
+
+| HTTP Status | Error Code | Meaning |
+|---|---|---|
+| `400` | `validation_failed` | One or more fields failed validation (e.g., malformed URL). |
+| `401` | `unauthorized` | Missing or invalid API key. |
+| `403` | `forbidden` | Your API key does not have the `clients:write` scope. |
+| `404` | `not_found` | No client with that ID exists in your tenant. |
+| `409` | `conflict` | A request with the same `Idempotency-Key` was already completed with a different body. |
+| `429` | `rate_limited` | You have exceeded 60 write requests per minute. |
+| `503` | `unavailable` | Scopable is temporarily unavailable — retry with backoff. |

@@ -1,0 +1,60 @@
+---
+title: "Scopable REST API Overview"
+sidebarTitle: "Overview"
+description: "The Scopable /v1 REST API lets any external system, script, or automation tool read and write your CRM clients and contacts over HTTPS."
+---
+
+The Scopable API is a versioned REST surface — base URL `https://api.scopable.io`, all routes under `/v1` — that lets any external system, script, or automation tool read and write your CRM data without touching the Scopable UI. Every request authenticates with a Bearer API key, every list endpoint uses cursor pagination, and every write requires an idempotency key so retries are always safe.
+
+## What you can do today
+
+The current API surface covers your core client and contact data:
+
+- **Read and list clients** — fetch a single client by ID or page through your full client list with cursor pagination
+- **Update client fields** — patch a client's name, website, phone number, and address
+- **Create, update, archive, and restore contacts** — manage the people associated with each client record
+- **Receive outbound webhooks** — subscribe to HMAC-signed event notifications whenever a client or contact changes
+
+## What's not yet available
+
+The following features are managed exclusively in the Scopable UI today and are not yet exposed through the API:
+
+- Opportunities and CPQ quotes
+- Assessments and GRC compliance records
+- Bulk import or export
+
+## Quick start
+
+Make your first API call in under a minute. Replace `$SCOPABLE_API_KEY` with a key generated in **Settings → Developer** (see [Authentication](/api-reference/authentication) for the full walkthrough).
+
+```bash
+curl -s "https://api.scopable.io/v1/clients?limit=1" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+A successful response returns a `data` array containing your first client record and a `nextCursor` value you can use to page forward.
+
+## OpenAPI document
+
+The live OpenAPI specification is always available at **[https://scopable.io/openapi.json](https://scopable.io/openapi.json)** and reflects the current API surface. Import it into Postman, Insomnia, or any OpenAPI-compatible toolchain to generate a client or explore endpoints interactively.
+
+<Note>
+  The OpenAPI document is updated automatically whenever new endpoints or fields are added. Pin to specific schema versions in your CI pipeline by snapshotting the file rather than fetching it at build time.
+</Note>
+
+## Explore the reference
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Generate API keys, choose key types and scopes, and send your Bearer token on every request.
+  </Card>
+  <Card title="Pagination" icon="arrow-right" href="/api-reference/pagination">
+    Use cursor-based pagination to page through large lists of clients and contacts safely.
+  </Card>
+  <Card title="Idempotency" icon="rotate" href="/api-reference/idempotency">
+    Add an Idempotency-Key header to every write so retries never create duplicates.
+  </Card>
+  <Card title="Errors" icon="circle-exclamation" href="/api-reference/errors">
+    Understand the error envelope structure and every error code the API can return.
+  </Card>
+</CardGroup>

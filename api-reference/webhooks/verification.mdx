@@ -1,0 +1,156 @@
+---
+title: "Verify Scopable Webhook Signatures"
+sidebarTitle: "Verification"
+description: "Verify HMAC-SHA256 signatures on incoming Scopable webhook payloads to confirm each request genuinely came from Scopable before you process it."
+---
+
+Scopable signs every outbound webhook payload with HMAC-SHA256 using a secret unique to your endpoint. The resulting hex digest is sent in the `X-Scopable-Signature` header alongside the request. Verifying this signature before acting on the payload protects your endpoint from spoofed or tampered requests.
+
+## Where to Find the Signature
+
+Every webhook `POST` request that Scopable sends to your endpoint includes:
+
+| Header | Value |
+|---|---|
+| `X-Scopable-Signature` | Hex-encoded HMAC-SHA256 of the raw request body |
+
+## Finding Your Webhook Secret
+
+Each endpoint you register in Scopable has its own unique secret.
+
+<Steps>
+  <Step title="Navigate to Webhook Settings">
+    In the Scopable app, go to **Settings → Developer → Webhooks**.
+  </Step>
+  <Step title="Open Your Endpoint">
+    Click on the endpoint whose secret you need.
+  </Step>
+  <Step title="Reveal the Secret">
+    Click **Show Secret**. Copy the value and store it securely — treat it like a password.
+  </Step>
+</Steps>
+
+## How Verification Works
+
+<Steps>
+  <Step title="Read the raw request body as bytes">
+    Capture the request body **before** parsing it as JSON. Parsing and re-serializing can alter whitespace and key ordering, which would invalidate the signature.
+  </Step>
+  <Step title="Compute HMAC-SHA256">
+    Use your webhook secret as the key and the raw body bytes as the message to compute an HMAC-SHA256 digest.
+  </Step>
+  <Step title="Hex-encode the result">
+    Convert the binary digest to a lowercase hexadecimal string.
+  </Step>
+  <Step title="Compare using constant-time equality">
+    Compare your computed hex string to the value in the `X-Scopable-Signature` header using a **constant-time comparison** function. Never use `==` for this comparison.
+  </Step>
+  <Step title="Accept or reject">
+    If the values match, the payload is authentic — proceed to parse and process it. If they don't match, reject the request with a `401` response and do not process the body.
+  </Step>
+</Steps>
+
+<Warning>
+  Always use a constant-time comparison (`timingSafeEqual` in Node.js, `compare_digest` in Python, `secure_compare` in Ruby) — never a simple `==`. A naive string comparison leaks timing information that an attacker can use to forge valid signatures.
+</Warning>
+
+## Code Examples
+
+<CodeGroup>
+
+```javascript Node.js
+const crypto = require('crypto');
+
+function verifySignature(rawBody, secret, signature) {
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(rawBody)
+    .digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(expected),
+    Buffer.from(signature)
+  );
+}
+
+// Express example
+app.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const signature = req.headers['x-scopable-signature'];
+  if (!signature || !verifySignature(req.body, process.env.WEBHOOK_SECRET, signature)) {
+    return res.status(401).send('Invalid signature');
+  }
+  const payload = JSON.parse(req.body);
+  // process payload.event and payload.data
+  res.sendStatus(200);
+});
+```
+
+```python Python
+import hmac
+import hashlib
+
+def verify_signature(raw_body: bytes, secret: str, signature: str) -> bool:
+    expected = hmac.new(
+        secret.encode(),
+        raw_body,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(expected, signature)
+
+# Flask example
+from flask import Flask, request, abort
+import os
+
+app = Flask(__name__)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    signature = request.headers.get('X-Scopable-Signature', '')
+    if not verify_signature(request.get_data(), os.environ['WEBHOOK_SECRET'], signature):
+        abort(401)
+    payload = request.get_json()
+    # process payload['event'] and payload['data']
+    return '', 200
+```
+
+```ruby Ruby
+require 'openssl'
+
+def verify_signature(raw_body, secret, signature)
+  expected = OpenSSL::HMAC.hexdigest('SHA256', secret, raw_body)
+  Rack::Utils.secure_compare(expected, signature)
+end
+
+# Sinatra example
+post '/webhook' do
+  signature = request.env['HTTP_X_SCOPABLE_SIGNATURE'] || ''
+  raw_body = request.body.read
+  halt 401, 'Invalid signature' unless verify_signature(raw_body, ENV['WEBHOOK_SECRET'], signature)
+  payload = JSON.parse(raw_body)
+  # process payload['event'] and payload['data']
+  status 200
+end
+```
+
+</CodeGroup>
+
+## Common Mistakes to Avoid
+
+<Accordion title="Parsing JSON before computing the signature">
+  Always read the raw request body as bytes first. If you parse the JSON body and then re-serialize it to compute the signature, any difference in whitespace, key ordering, or encoding will produce a digest that doesn't match — and every verification will fail.
+</Accordion>
+
+<Accordion title="Using == for signature comparison">
+  A plain equality check in most languages short-circuits as soon as it finds a mismatched byte. This timing difference leaks information that allows an attacker to iteratively forge a valid signature. Always use a constant-time comparison function.
+</Accordion>
+
+<Accordion title="Storing the secret in source code">
+  Store your webhook secret in an environment variable or a secrets manager, not in your codebase or version control. If it's ever committed or exposed, rotate it immediately.
+</Accordion>
+
+## Rotating Your Webhook Secret
+
+<Tip>
+  If your webhook secret is ever exposed — committed to a repository, logged, or shared accidentally — rotate it immediately in **Settings → Developer → Webhooks → [your endpoint] → Rotate Secret**. Update your endpoint handler with the new secret before the old one expires to avoid dropped deliveries.
+</Tip>
+
+After rotating, Scopable begins signing all new deliveries with the new secret. Any in-flight deliveries signed with the old secret will fail verification in your handler once you've updated it — you can replay those events from the Scopable webhook delivery log if needed.

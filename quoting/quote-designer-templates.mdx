@@ -1,0 +1,136 @@
+---
+title: "Build and Customize a Quote Designer Template"
+sidebarTitle: "Templates"
+description: "Set your branding, arrange flowing sections, preview the PDF output, select a template for individual quotes, and configure the account-wide default layout."
+---
+
+Templates define exactly how your quotes look when clients receive them. A well-built template reinforces your brand, makes pricing easy to read, and presents your scope professionally — in both the client-facing web view and the downloaded PDF. This guide walks you through creating a template from scratch, applying it to a specific quote, and setting it as your account default.
+
+---
+
+## Create a Template
+
+<Steps>
+  <Step title="Open Quote Designer">
+    Go to **Settings** in the left sidebar and select **Quote Designer**. Click
+    **New Template** in the top-right corner.
+  </Step>
+
+  <Step title="Name your template">
+    Give the template a descriptive name so you can identify it later — for
+    example, "Standard Managed Services" or "Hardware Proposal – Dark Theme".
+    The name is internal only; clients never see it.
+  </Step>
+
+  <Step title="Configure the cover block">
+    The cover block is the first thing your client sees. Set it up to make a
+    strong first impression:
+
+    - **Logo** — upload your company logo in PNG or SVG format (max 2 MB). The logo appears on the cover and optionally in the header of subsequent pages.
+    - **Brand color** — choose a hex color for accents, headings, and the cover background stripe.
+    - **Tagline** — add an optional short phrase beneath your logo, such as your company slogan or a quote-specific message like "Prepared exclusively for [Client Name]".
+
+    The cover block automatically pulls in the client name, quote number, and
+    quote date from the quote record — you don't need to add those manually.
+  </Step>
+
+  <Step title="Add flowing sections">
+    Flowing sections make up the body of the quote. Add and reorder them by
+    dragging each section block into the sequence that works best for your
+    quote format:
+
+    | Section type | What it renders |
+    |---|---|
+    | **Line items table** | A formatted table of all products with quantities, unit prices, and totals |
+    | **Scope narrative** | Free-text or template-text blocks for describing the engagement, deliverables, or implementation details |
+    | **Terms and conditions** | Your standard T&C copy, rendered as a readable text block before the closing section |
+
+    You can add multiple scope narrative blocks to separate different phases or
+    service categories within the same quote.
+  </Step>
+
+  <Step title="Configure the closing block">
+    The closing block appears at the end of the quote. Configure it to wrap up
+    the document professionally:
+
+    - **Signature area** — include a signature line (or leave it off for quotes that are accepted via the web link)
+    - **Contact details** — add your name, email, and phone so the client knows who to reach out to
+    - **Closing copy** — an optional short paragraph such as a call to action or next-step instructions
+  </Step>
+
+  <Step title="Preview the PDF">
+    Before saving, click **Preview PDF** to render the template with sample
+    data. Check that your logo loads, brand color appears correctly, section
+    order looks right, and the closing block lands on the final page. Make any
+    adjustments and preview again until the output matches your expectations.
+
+    <Tip>
+      The PDF renders with fixed-width page dimensions. The web-link view uses a
+      responsive layout that adapts to the client's screen size. Always preview
+      both before using a template for the first time.
+    </Tip>
+  </Step>
+
+  <Step title="Save the template">
+    Click **Save Template**. The template is now available to select on any
+    quote in your account.
+  </Step>
+</Steps>
+
+---
+
+## Select a Template for a Quote
+
+You can apply any saved template to an individual quote, overriding the account default for that specific quote.
+
+<Steps>
+  <Step title="Open the quote">
+    Navigate to the quote you want to update — either from the client record or
+    from the **Quotes** list in the left sidebar.
+  </Step>
+
+  <Step title="Open the Template picker">
+    In the quote detail view, click the **Template** selector. A dropdown lists
+    all templates saved in your account, with the account default pre-selected.
+  </Step>
+
+  <Step title="Choose your template">
+    Select the template you want to use. The quote preview in the right panel
+    updates to show how the quote will look with that template applied.
+  </Step>
+
+  <Step title="Preview the client-facing view">
+    Click **Preview** to open the client-facing quote view in a new tab. This
+    is the same experience your client will see when they open the quote link.
+    Confirm the layout, branding, and content all look correct before sending.
+  </Step>
+</Steps>
+
+---
+
+## Set an Account Default Template
+
+The account default template is automatically applied to every new quote. Setting a strong default means your team gets consistent branding without having to manually select a template for each quote.
+
+<Steps>
+  <Step title="Open Quote Designer settings">
+    Go to **Settings → Quote Designer**.
+  </Step>
+
+  <Step title="Find the template to set as default">
+    Locate the template you want to use as the account-wide default in the
+    template list.
+  </Step>
+
+  <Step title="Mark it as Default">
+    Click the **⋯** menu on that template row and select **Set as Default**. A
+    **Default** badge appears next to the template name. All new quotes created
+    from this point forward will use this template unless a different one is
+    manually selected on the quote.
+  </Step>
+</Steps>
+
+<Note>
+  Changing the account default does not update templates already selected on
+  existing quotes. Only new quotes pick up the new default automatically.
+</Note>

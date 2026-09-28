@@ -1,0 +1,104 @@
+---
+title: "Error Codes and Handling in the Scopable API"
+sidebarTitle: "Errors"
+description: "Every Scopable API error uses the same JSON envelope. Learn every error code, its HTTP status, and the right way to handle each one in your integration."
+---
+
+Every error from the Scopable API uses the same JSON envelope so you can handle failures consistently across all endpoints. Parse the `error.code` field to branch your error-handling logic, log `error.requestId` for support tickets, and treat the `error.message` as a human-readable description suitable for internal debugging (never display it verbatim to end users).
+
+## Error envelope
+
+All error responses — regardless of HTTP status code — use this structure:
+
+```json
+{
+  "error": {
+    "code": "not_found",
+    "message": "Client not found",
+    "requestId": "7ec9769a-c029-4c41-8eba-0a4e54c088a9"
+  }
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `code` | string | Machine-readable error identifier — use this to drive error-handling logic |
+| `message` | string | Human-readable description of what went wrong |
+| `requestId` | string | Unique ID for this request — matches the `X-Request-Id` response header |
+
+<Tip>
+  The `requestId` value is identical to the `X-Request-Id` header on every response, success or error. Include it in any support ticket or bug report you file with [support@scopable.com](mailto:support@scopable.com) so the team can locate the exact request in logs.
+</Tip>
+
+## Error codes
+
+| Code | HTTP status | Meaning |
+|---|---|---|
+| `validation_failed` | `400` | Request body, query parameter, cursor, or a required header (such as `Idempotency-Key`) is invalid or missing |
+| `unauthorized` | `401` | API key is missing, unknown, expired, or revoked |
+| `forbidden` | `403` | Key is valid but lacks the required scope for this operation |
+| `not_found` | `404` | The requested record does not exist in your tenant |
+| `conflict` | `409` | An idempotency key was reused with a different body, or the change conflicts with current record state |
+| `rate_limited` | `429` | A per-minute rate limit was exceeded — back off and retry |
+| `unavailable` | `503` | A Scopable dependency is down, or a required integration is not connected |
+
+## Handling each code
+
+<AccordionGroup>
+  <Accordion title="400 validation_failed">
+    The request was malformed. Check the `message` field for specifics — it will identify the invalid parameter, missing field, or malformed cursor. Common causes:
+    - Missing `Idempotency-Key` header on a write request
+    - `limit` value outside the `1–200` range
+    - Changing filter parameters mid-pagination while passing a cursor
+    - Invalid JSON body or wrong `Content-Type`
+
+    Fix the request and send it with a **new** idempotency key — do not retry with the original key.
+  </Accordion>
+  <Accordion title="401 unauthorized">
+    The API key is missing, unrecognised, or has been revoked. Steps to resolve:
+    - Confirm the `Authorization` header is present and follows the `Bearer <key>` format exactly
+    - Check that you're using the correct key for the environment — a `sk_test_` key against a production endpoint, or vice versa, will also return `401`
+    - If the key was recently rotated or revoked, generate a replacement in **Settings → Developer**
+  </Accordion>
+  <Accordion title="403 forbidden">
+    The key is valid but doesn't have the scope required for this operation. For example, using a `clients:read`-only key to `PATCH` a client returns `403`. Regenerate the key in **Settings → Developer** with the additional scopes your integration needs — scopes cannot be added to an existing key.
+  </Accordion>
+  <Accordion title="404 not_found">
+    No record with that ID exists in your tenant. Note that records belonging to a **different tenant** also return `404` — never `403` — to avoid leaking the existence of records across tenants. If you're confident the record should exist, verify the ID and confirm you're authenticating with the correct tenant's API key.
+  </Accordion>
+  <Accordion title="409 conflict">
+    Two sub-cases share this status:
+    - **`idempotency_replay`** — the write already succeeded under this idempotency key. Treat the original response embedded in the error as your result; no further action is needed.
+    - **`idempotency_key_reused`** — a different request body was sent under an already-used idempotency key. Generate a fresh key for the new operation.
+
+    In both cases, inspect `error.code` to distinguish them.
+  </Accordion>
+  <Accordion title="429 rate_limited">
+    You have exceeded the per-minute rate limit for your API key. The response includes a `Retry-After` header specifying the number of seconds to wait before resending. Monitor the `RateLimit-Remaining` and `RateLimit-Reset` headers on every response to avoid hitting the limit in the first place.
+  </Accordion>
+  <Accordion title="503 unavailable">
+    A Scopable dependency is temporarily unavailable, or an integration your request depends on is not connected to your tenant. Check **Settings → Integrations** to confirm all required integrations are active. For transient outages, implement exponential backoff — most `503` responses resolve within seconds.
+  </Accordion>
+</AccordionGroup>
+
+## Rate limits
+
+Scopable enforces per-API-key rate limits on a rolling one-minute window:
+
+| Operation type | Limit |
+|---|---|
+| Read requests (`GET`) | **600 per minute** |
+| Write requests (`POST`, `PATCH`, `DELETE`) | **60 per minute** |
+
+Every response — success or error — includes the following headers so you can track consumption in real time:
+
+| Header | Value |
+|---|---|
+| `RateLimit-Limit` | The total allowed requests in the current window |
+| `RateLimit-Remaining` | Requests remaining in the current window |
+| `RateLimit-Reset` | Unix timestamp when the current window resets |
+| `X-Request-Id` | Unique request identifier — matches `error.requestId` in error responses |
+
+<Note>
+  If you're building a sync that processes large data sets, page through records with the maximum `limit=200` to reduce your read request count, and batch writes where the API allows it. This keeps you well within the 600 read / 60 write per minute limits.
+</Note>

@@ -1,0 +1,48 @@
+---
+title: "Connect TD SYNNEX StreamOne Ion to Scopable"
+sidebarTitle: "TD SYNNEX"
+description: "Connect TD SYNNEX StreamOne Ion using your account ID, API key, secret, and refresh token from the Ion portal to access live catalog pricing in Scopable."
+---
+
+The TD SYNNEX integration connects your StreamOne Ion account and pulls the TD SYNNEX product catalog, live pricing, and availability into Scopable. Once connected, your team can search TD SYNNEX products at your reseller pricing directly inside Quote Wizard without logging in to the Ion portal separately.
+
+## What syncs
+
+| Data | Details |
+|------|---------|
+| **Product catalog** | Full TD SYNNEX catalog available for search inside Quote Wizard |
+| **Live pricing** | Your StreamOne Ion reseller pricing returned at search time |
+| **Stock availability** | Real-time availability at the time of quoting |
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- A **TD SYNNEX StreamOne Ion account**
+- Your **Account ID**, **API Key**, **API Secret**, and **Refresh Token** from the Ion Admin Portal — see Step 1 below
+- **Admin** permissions in Scopable
+
+## Connect TD SYNNEX
+
+<Steps>
+  <Step title="Retrieve credentials from StreamOne Ion">
+    Log in to the **StreamOne Ion Admin Portal** and navigate to **Admin → API → Credentials**. Copy your **Account ID**, **API Key**, **API Secret**, and **Refresh Token**. Store all four values securely before continuing — you'll need each one during setup.
+  </Step>
+  <Step title="Open the TD SYNNEX integration in Scopable">
+    In Scopable, go to **Settings → Integrations → TD SYNNEX** and click **Connect**.
+  </Step>
+  <Step title="Enter your credentials">
+    Enter your **Account ID**, **API Key**, **API Secret**, and **Refresh Token** into the fields provided, then click **Connect**.
+  </Step>
+  <Step title="Validation and catalog sync">
+    Scopable validates your credentials against the StreamOne Ion API and begins syncing catalog data. The initial sync may take a few minutes depending on catalog size.
+  </Step>
+</Steps>
+
+## After connecting
+
+**Quote Wizard** — TD SYNNEX appears as a selectable catalog source. Product searches return live-priced results at your StreamOne Ion reseller rates along with current availability.
+
+<Note>
+  StreamOne Ion refresh tokens expire after a period of time. If the TD SYNNEX integration shows a connection error or stops returning products in Quote Wizard after several months, return to the Ion Admin Portal, generate a new Refresh Token, and reconnect the integration in **Settings → Integrations → TD SYNNEX** with the updated token.
+</Note>

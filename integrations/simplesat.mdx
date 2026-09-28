@@ -1,0 +1,67 @@
+---
+title: "Connect SimpleSAT to Scopable"
+sidebarTitle: "SimpleSAT"
+description: "Create a scoped SimpleSAT API key with five read permissions, connect it to Scopable, and bring CSAT and NPS survey responses into every client record."
+---
+
+The SimpleSAT integration pulls customer satisfaction survey responses into Scopable so you can see CSAT and NPS data alongside each client record. Instead of switching between platforms during a QBR or vCIO conversation, you get the full picture — technical posture, financial data, and customer sentiment — in one place.
+
+## What syncs
+
+| Data | Details |
+|------|---------|
+| **Survey responses** | CSAT and NPS scores mapped to Scopable clients |
+| **Comments** | Free-text feedback attached to each response |
+| **Trends** | Score history surfaced on the client's SimpleSAT tab |
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- A **SimpleSAT account**
+- The ability to create a **scoped API key** in SimpleSAT with the five required read permissions listed in Step 1 below
+- **Admin** permissions in Scopable
+
+## Connect SimpleSAT
+
+<Steps>
+  <Step title="Create a scoped API key in SimpleSAT">
+    In SimpleSAT, go to **Settings → Integrations → API → Create API Key**. When configuring the key's permissions, enable **read** access for all five of the following scopes:
+
+    - **Organizations** (read)
+    - **Surveys** (read)
+    - **Responses** (read)
+    - **Contacts** (read)
+    - **Tags** (read)
+
+    Copy the API key — it is only displayed once.
+  </Step>
+  <Step title="Open the SimpleSAT integration in Scopable">
+    In Scopable, go to **Settings → Integrations → SimpleSAT** and click **Connect**.
+  </Step>
+  <Step title="Paste your API key">
+    Paste the API key you copied from SimpleSAT and click **Connect**.
+  </Step>
+  <Step title="Scopable validates and syncs">
+    Scopable verifies that the API key has all five required permissions. Once validated, the initial sync of survey responses begins. Depending on your response volume, this may take a few minutes.
+  </Step>
+  <Step title="Map SimpleSAT customers to Scopable clients">
+    Go to **Settings → Integrations → SimpleSAT → Customer Mappings**. Scopable auto-matches customers by name. For any customers that weren't matched automatically, select the correct Scopable client from the dropdown and confirm.
+  </Step>
+</Steps>
+
+<Warning>
+  If your API key is missing any of the five required read permissions, the connection will fail with a permissions error. Return to SimpleSAT, delete the key, create a new one with all five read permissions enabled, and reconnect.
+</Warning>
+
+## After connecting
+
+Open any mapped client record and select the **SimpleSAT** tab. You'll see:
+
+- Recent CSAT and NPS scores with response comments
+- A score trend chart showing satisfaction over time
+- Individual survey responses with timestamps
+
+<Tip>
+  SimpleSAT data is a powerful input for vCIO conversations and QBRs. Use the trend chart to open discussions about service quality, surface wins, and identify accounts where satisfaction has dipped and action is needed.
+</Tip>

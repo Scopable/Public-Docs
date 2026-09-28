@@ -1,0 +1,104 @@
+---
+title: "Map Connected System Records to Scopable Clients"
+sidebarTitle: "Client Mappings"
+description: "Review suggested matches, confirm or clear mappings, and control which external organizations sync contacts, devices, and cost data into Scopable clients."
+---
+
+After connecting an integration, Scopable automatically tries to match each external organization to your existing Scopable clients by name. Mappings control the flow of data: contacts, configuration items, Azure cost data, and other records only sync into a client once a mapping is confirmed. Until then, the external organization sits in an **Unmapped** state and its data stays out of your workspace.
+
+## How Automatic Matching Works
+
+When Scopable imports organizations from a connected system, it compares each organization's name against your Scopable client list. Matches are scored by confidence level:
+
+- **High confidence** — names are identical or very close; Scopable links these automatically
+- **Suggested** — names are similar but not exact; Scopable surfaces these for your review before linking
+- **No match found** — the name is too different for Scopable to suggest a candidate; you map these manually
+
+<Tip>
+  If company names differ significantly between systems — for example, "Acme Corp" in your PSA versus "Acme Corporation" in NinjaOne — align the names in your source systems before connecting to reduce the amount of manual mapping work you need to do.
+</Tip>
+
+## Where to Review Mappings
+
+Open **Settings → Integrations → [Integration Name] → Client Mappings**. The mappings page shows three tabs:
+
+| Tab | What you see |
+|-----|-------------|
+| **Mapped** | External organizations already linked to a Scopable client |
+| **Suggested** | Auto-detected matches waiting for your confirmation |
+| **Unmapped** | Organizations with no match — data is not syncing |
+
+## Confirming a Suggested Match
+
+When Scopable finds a likely match, it shows the external organization name alongside the suggested Scopable client.
+
+<Steps>
+  <Step title="Open the Suggested tab">
+    Navigate to **Settings → Integrations → [Integration Name] → Client Mappings → Suggested**.
+  </Step>
+  <Step title="Review the suggestion">
+    Compare the external organization name with the suggested Scopable client. If the match is correct, click **Confirm**.
+  </Step>
+  <Step title="Scopable activates the mapping">
+    The organization moves to the **Mapped** tab and its data begins syncing into the linked Scopable client immediately.
+  </Step>
+</Steps>
+
+## Clearing an Incorrect Match
+
+If Scopable linked an organization to the wrong client — either automatically or via a mistaken confirmation — you can clear the mapping and start over.
+
+<Steps>
+  <Step title="Open the Mapped tab">
+    Navigate to **Settings → Integrations → [Integration Name] → Client Mappings → Mapped**.
+  </Step>
+  <Step title="Find the incorrect mapping">
+    Locate the external organization in the list.
+  </Step>
+  <Step title="Clear the mapping">
+    Click **Clear** next to the organization. Scopable removes the link — the organization moves back to **Unmapped** and data stops syncing to the previously linked client.
+  </Step>
+  <Step title="Remap manually">
+    Follow the manual mapping steps below to link the organization to the correct client.
+  </Step>
+</Steps>
+
+<Warning>
+  Clearing a mapping stops data from syncing immediately. Existing synced data (contacts, configurations) already in the client record is not deleted, but it will no longer receive updates until you create a new mapping.
+</Warning>
+
+## Mapping an Organization Manually
+
+If Scopable couldn't suggest a match, or if you've cleared an incorrect one, you can map any external organization to any Scopable client by hand.
+
+<Steps>
+  <Step title="Open the Unmapped tab">
+    Navigate to **Settings → Integrations → [Integration Name] → Client Mappings → Unmapped**.
+  </Step>
+  <Step title="Find the organization">
+    Locate the external organization you want to map.
+  </Step>
+  <Step title="Click Map">
+    Click **Map** next to the organization name. A search field appears.
+  </Step>
+  <Step title="Select the target client">
+    Type the Scopable client name and select it from the dropdown.
+  </Step>
+  <Step title="Confirm the selection">
+    Click **Save**. The organization moves to the **Mapped** tab and data begins syncing.
+  </Step>
+</Steps>
+
+## Unmapped Organizations
+
+Any external organization without a confirmed mapping is listed on the **Unmapped** tab. These organizations are fully ignored by the sync engine — no contacts, devices, configurations, or cost data flows into Scopable until you map them.
+
+<Info>
+  You don't have to map every organization. If a customer in your PSA isn't a Scopable client yet, leave it unmapped. You can always come back and map it later when you're ready to bring that client into Scopable.
+</Info>
+
+## Mappings Across Multiple Integrations
+
+Each integration maintains its own set of mappings independently. A single Scopable client can have mappings to organizations across multiple integrations — for example, the same client can be linked to a ConnectWise company, a NinjaOne organization, and a Liongard environment simultaneously. All mapped sources contribute their data to the same client record.
+
+To manage mappings for a specific integration, always navigate to that integration's own **Client Mappings** page under **Settings → Integrations → [Integration Name]**.

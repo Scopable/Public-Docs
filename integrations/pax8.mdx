@@ -1,0 +1,60 @@
+---
+title: "Connect Pax8 to Scopable"
+sidebarTitle: "Pax8"
+description: "Connect your Pax8 reseller account to search the full catalog, pull live pricing, manage subscriptions, and submit orders directly from Scopable quotes."
+---
+
+Connecting Pax8 brings the full Pax8 product catalog, live pricing, and subscription management into Scopable so you can quote and order without leaving the platform. Once connected, your Account Managers and vCIOs can build quotes backed by real Pax8 pricing and place orders the moment a client approves — all from a single workspace.
+
+## What you get
+
+<CardGroup cols={2}>
+  <Card title="Full Catalog Search" icon="magnifying-glass">
+    Search the entire Pax8 product catalog directly inside Quote Wizard when building a quote.
+  </Card>
+  <Card title="Live Pricing & Availability" icon="tag">
+    Pricing pulled at quote time reflects your current Pax8 reseller rates and product availability.
+  </Card>
+  <Card title="Order Submission" icon="cart-shopping">
+    Submit Pax8 orders directly from an approved quote — no need to re-enter line items in the Pax8 portal.
+  </Card>
+  <Card title="Subscription Management" icon="rotate">
+    View and manage each client's active Pax8 subscriptions from their Scopable client record.
+  </Card>
+</CardGroup>
+
+Pax8 data also feeds Scopable's billing reconciliation view, making it easier to spot discrepancies between what you're billing clients and what Pax8 is charging you.
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- A **Pax8 reseller account**
+- **API credentials** (Client ID and Client Secret) generated in the Pax8 Partner Portal — see Step 1 below
+- **Admin** permissions in Scopable
+
+## Connect Pax8
+
+<Steps>
+  <Step title="Generate API credentials in Pax8">
+    Log in to the **Pax8 Partner Portal**, then navigate to **Company → API Credentials → Create Credentials**. Copy the **Client ID** and **Client Secret** — the secret is only shown once, so store it securely before closing the dialog.
+  </Step>
+  <Step title="Open the Pax8 integration in Scopable">
+    In Scopable, go to **Settings → Integrations → Pax8** and click **Connect**.
+  </Step>
+  <Step title="Enter your credentials">
+    Paste your **Client ID** and **Client Secret** into the fields provided and click **Connect**.
+  </Step>
+  <Step title="Validation and sync">
+    Scopable validates your credentials against the Pax8 API. Once validated, the initial catalog and subscription sync begins. Depending on your catalog size, the first sync may take a few minutes.
+  </Step>
+</Steps>
+
+## After connecting
+
+- **Quote Wizard** — Pax8 appears as a selectable product source. When you search for a product, Scopable queries Pax8 in real time and returns live-priced results.
+- **Client records** — each Scopable client mapped to a Pax8 company shows an active subscription list under the Pax8 section of the client record.
+
+<Tip>
+  After connecting, go to **Settings → Integrations → Pax8 → Company Mappings** and map your Pax8 companies to the corresponding Scopable clients. Until a Pax8 company is mapped, its subscription data won't appear on the correct client record.
+</Tip>

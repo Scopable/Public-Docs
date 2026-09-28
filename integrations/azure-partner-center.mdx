@@ -1,0 +1,84 @@
+---
+title: "Connect Azure Partner Center to Scopable"
+sidebarTitle: "Azure / Partner Center"
+description: "Sync managed Azure subscriptions, cost data, and AI cost-optimization recommendations via a one-click OAuth flow into Scopable — no API keys needed."
+---
+
+The Azure / Partner Center integration connects your Microsoft Partner Center account and pulls your managed customers' Azure subscriptions, cost data, and resource inventory into Scopable — all via a one-click OAuth flow with no API keys or client secrets to manage. Once connected, each mapped client surfaces a live Azure cost summary alongside AI-generated recommendations to reduce spend, tighten security, and improve reliability.
+
+## What it provides
+
+| Feature | Details |
+|---------|---------|
+| **Azure subscription list** | All active subscriptions per mapped client |
+| **Monthly cost estimates** | Current month's spend with month-over-month change |
+| **Cost breakdown** | Spend by Azure service and individual resource |
+| **AI cost-optimization recommendations** | Actionable suggestions across cost, security, performance, and reliability tiers |
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- **Admin** permissions in Scopable with the **Manage Tenant Settings** permission enabled
+- Access to **Microsoft Partner Center** with consent authority for your organization
+- **GDAP (Granular Delegated Admin Privileges)** relationships established with the customers you want to pull cost data for — your GDAP roles must include subscription and cost-management read access
+
+## Connect Azure / Partner Center
+
+<Steps>
+  <Step title="Open the Azure / Partner Center integration">
+    In Scopable, go to **Settings → Integrations → Azure / Partner Center** and click **Connect Partner Center**.
+  </Step>
+  <Step title="Sign in and approve the consent screen">
+    Microsoft redirects you to its sign-in and consent screen. Sign in with an admin account that has consent authority in your Partner Center organization and approve the requested permissions.
+  </Step>
+  <Step title="Return to Scopable">
+    Microsoft redirects you back to Scopable automatically. The connection is stored and Scopable immediately begins fetching your managed customer list from Partner Center.
+  </Step>
+  <Step title="Review client mappings">
+    Go to **Settings → Integrations → Azure / Partner Center → Client Mappings**. Confirm auto-matched customers and manually confirm any suggestions where the match wasn't strong enough to link automatically.
+  </Step>
+</Steps>
+
+<Note>
+  No API keys, client secrets, or certificates are required. Scopable uses a Microsoft-verified application and a standard OAuth 2.0 authorization code flow — the token is stored securely on your behalf.
+</Note>
+
+## Customer matching
+
+Scopable matches Partner Center customers to Scopable clients by company name. Strong name matches link automatically. Weaker matches appear as **suggestions** in the Client Mappings screen for you to confirm or reassign. If a customer's name differs significantly between Partner Center and Scopable, align the names or manually confirm the suggestion.
+
+Customers with no active Azure subscriptions are skipped during the sync. This is expected behavior — not an error.
+
+## Azure / Partner Center vs. Microsoft 365
+
+<Note>
+  The Azure / Partner Center and Microsoft 365 integrations are separate connections that cover different data sets.
+
+  - **Azure / Partner Center** — CSP subscriptions, spend data, and AI cost-optimization recommendations
+  - **Microsoft 365** — users, MFA enrollment status, and license assignments
+
+  You can connect both independently. See [Connect Microsoft 365 to Scopable](/integrations/microsoft-365) for details on the M365 side.
+</Note>
+
+## Troubleshooting
+
+<Accordion title="Sync failed or cost data is missing for a customer">
+  Verify the following for that customer:
+
+  1. The customer is **mapped** to a Scopable client in **Settings → Integrations → Azure / Partner Center → Client Mappings**.
+  2. The customer has at least one **active Azure subscription** in Partner Center.
+  3. Your **GDAP relationship** with that customer grants subscription and cost-management read access. GDAP roles that don't include these scopes will cause cost data to be silently skipped.
+</Accordion>
+
+<Accordion title="The Connect button does nothing">
+  The **Connect Partner Center** button requires the **Manage Tenant Settings** permission in Scopable. Ask an Admin to grant you that permission, then retry.
+</Accordion>
+
+<Accordion title="A customer was matched to the wrong Scopable client">
+  This happens when company names differ between Partner Center and Scopable. To fix it:
+
+  1. Go to **Settings → Integrations → Azure / Partner Center → Client Mappings**.
+  2. Find the incorrect match and click **Reassign**.
+  3. Select the correct Scopable client from the list and confirm.
+</Accordion>

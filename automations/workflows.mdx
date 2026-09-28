@@ -1,0 +1,78 @@
+---
+title: "Automate MSP Work with Scopable Workflows"
+sidebarTitle: "Workflows"
+description: "Build event-driven workflows with triggers, conditions, and outcomes to automate quotes, opportunities, and compliance actions in Scopable — no code required."
+---
+
+Workflows in Scopable let you automate repetitive actions — from sending quote follow-up reminders to updating opportunity stages when a quote is accepted — without writing code. Each workflow watches for a specific event, optionally checks conditions, and then takes an action automatically.
+
+## Key Concepts
+
+<CardGroup cols={2}>
+  <Card title="Trigger" icon="bolt">
+    The event that starts the workflow. Examples: a quote is created, an opportunity moves to a stage, a compliance item changes status.
+  </Card>
+  <Card title="Conditions" icon="filter">
+    Optional filters that determine whether the workflow should actually run. Example: only fire for quotes over $5,000, or only for a specific client tag.
+  </Card>
+  <Card title="Outcome" icon="check">
+    The action Scopable takes when the trigger fires and all conditions are met. Examples: send a notification, update a field, create a task.
+  </Card>
+  <Card title="Run History" icon="clock-rotate-left">
+    A log of every time the workflow fired, including whether it succeeded and any error detail if it didn't.
+  </Card>
+</CardGroup>
+
+## Supported Trigger Categories
+
+| Category | Example triggers |
+|---|---|
+| **Quote events** | Quote created, Quote sent, Quote viewed, Quote accepted, Quote expired |
+| **Opportunity events** | Opportunity created, Stage changed, Opportunity won, Opportunity lost |
+| **Compliance events** | Compliance item status changed, Assessment completed, Framework item overdue |
+
+## Building a Workflow
+
+<Steps>
+  <Step title="Open Workflows">
+    Go to **Automations → Workflows** in the left navigation.
+  </Step>
+  <Step title="Create a new workflow">
+    Click **New Workflow**. Give the workflow a descriptive name — for example, *Quote follow-up after 3 days* or *Notify AM on deal won*.
+  </Step>
+  <Step title="Choose a trigger">
+    Select the trigger category and specific event that should start this workflow. For example: **Quote events → Quote sent**.
+  </Step>
+  <Step title="Add conditions (optional)">
+    Click **Add Condition** to narrow when the workflow fires. Chain multiple conditions with AND/OR logic. For example: *Quote total is greater than $5,000* AND *Client tag includes "Enterprise"*.
+  </Step>
+  <Step title="Define the outcome">
+    Click **Add Outcome** and choose the action to take. Configure any required fields — for example, the recipient of a notification or the field to update.
+  </Step>
+  <Step title="Activate the workflow">
+    Click **Activate**. The workflow is now live and will fire the next time the trigger event occurs and all conditions are met.
+  </Step>
+</Steps>
+
+## Activating and Pausing Workflows
+
+Use the **toggle** next to each workflow in the Workflows list to enable or disable it at any time.
+
+- **Active** (toggle on): the workflow fires whenever its trigger and conditions are met.
+- **Paused** (toggle off): the workflow is saved but will not fire. Use this when you want to edit or temporarily disable a workflow without deleting it.
+
+## Viewing Run History
+
+1. Click any workflow in the list to open its detail page.
+2. Go to the **History** tab.
+3. Review the log of every execution — timestamp, trigger event, conditions evaluated, outcome attempted, and success or failure status.
+
+Failed runs show an error detail that helps you diagnose misconfigured outcomes or missing data.
+
+<Tip>
+  Start with one workflow for your highest-volume repetitive task — such as a quote follow-up reminder — before building more complex chains. Once that workflow is running reliably, you'll have a clear pattern to replicate for other automations.
+</Tip>
+
+<Note>
+  Workflows run on Scopable's servers, not your local machine. They fire even when you're not logged in, so time-sensitive automations like expiry reminders work reliably around the clock.
+</Note>

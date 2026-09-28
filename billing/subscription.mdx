@@ -1,0 +1,88 @@
+---
+title: "Understand Your Scopable Billing and Subscription"
+sidebarTitle: "Subscription"
+description: "How Scopable billing works: free trial access, seat counting, Stripe Checkout, invoice downloads, payment failure recovery, and cancellation explained."
+---
+
+This page explains how Scopable billing works — from the free trial through seat counting, invoices, and what happens if a payment fails. Understanding these mechanics helps you keep your account in good standing and avoid unexpected charges or service interruptions.
+
+## Free Trial
+
+Scopable's free trial gives you full platform access from day one — no credit card required and no approval process. Explore every feature, connect your integrations, and invite your team before committing to a paid plan.
+
+The trial ends when you choose to subscribe, or when the trial time limit is reached. If the time limit expires before you subscribe, your account enters a restricted state until you complete checkout.
+
+## Seat Counting
+
+Every **active user** on your Scopable account counts as one seat. Seats determine the price you pay each billing period.
+
+- **Adding a seat**: invite a new user — the seat count updates automatically and is reflected at your next billing cycle (or prorated for annual plans).
+- **Freeing a seat**: deactivate a user in **Settings → Users**. The seat is released and your next invoice reflects the lower count.
+
+<Note>
+  Deactivating a user revokes their access immediately but their data — quotes, notes, activities — remains intact in Scopable. You can reactivate the user at any time.
+</Note>
+
+## Invoice Access
+
+Download PDF invoices for any past payment directly from Scopable:
+
+1. Go to **Settings → Billing → Invoices**.
+2. Find the invoice by date or billing period.
+3. Click **Download PDF**.
+
+Invoices include your plan details, seat count, period covered, and the total charged.
+
+## Payment Methods
+
+Add or update your payment card at any time without re-entering your subscription details:
+
+1. Go to **Settings → Billing → Payment Method**.
+2. Click **Update Payment Method**.
+3. Enter your new card details in the Stripe-hosted form and save.
+
+Your new card is charged on the next billing cycle. Previous invoices are not affected.
+
+## Payment Recovery
+
+If a payment fails — for example, because a card expired — Scopable handles recovery automatically:
+
+1. **Automatic retry**: Scopable retries the charge on a scheduled cadence over several days.
+2. **Email notification**: you'll receive an email at your account's billing address prompting you to update your payment method.
+3. **Grace period**: your account remains fully active during the retry window. Update your payment method within the grace period to avoid any service interruption.
+
+<Warning>
+  If a payment is not recovered within the grace period, your account will be restricted to read-only access until the outstanding balance is resolved. Update your payment method in **Settings → Billing → Payment Method** as soon as you receive a failed payment notification.
+</Warning>
+
+## Cancellation
+
+To cancel your Scopable subscription:
+
+1. Go to **Settings → Billing → Cancel Subscription**.
+2. Review the cancellation summary, including when your access ends.
+3. Confirm cancellation.
+
+Your account remains fully active until the end of the current billing period. After that date, access is ended and you will not be charged again. Your data is retained for a period after cancellation in case you choose to reactivate.
+
+## Frequently Asked Questions
+
+<Accordion title="How do I add a seat?">
+  Invite a new user from **Settings → Users → Invite User**. The seat count on your account updates automatically. For monthly plans, the additional seat appears on your next invoice. For annual plans, the additional seat is prorated for the remainder of the annual period and billed immediately.
+</Accordion>
+
+<Accordion title="Can I switch from monthly to annual billing?">
+  Yes. Go to **Settings → Billing → Change Plan** and select the annual commitment. Scopable will calculate the prorated difference between what you've already paid for the current month and the annual rate, and apply it to your new plan.
+</Accordion>
+
+<Accordion title="Where do I get a receipt for my payment?">
+  Go to **Settings → Billing → Invoices** and download a PDF for any past payment. Scopable also emails a receipt to your billing address automatically after each successful charge.
+</Accordion>
+
+<Accordion title="What happens to my data if I cancel?">
+  Your data — client records, quotes, assessments, and settings — is retained for a period after your subscription ends. If you reactivate your account within that window, everything is exactly as you left it. Contact support@scopable.com if you need to discuss data retention or export your data after cancellation.
+</Accordion>
+
+<Accordion title="Can I get a refund?">
+  Reach out to support@scopable.com to discuss refund requests. Annual subscriptions cancelled early are reviewed on a case-by-case basis.
+</Accordion>

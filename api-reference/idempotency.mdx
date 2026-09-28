@@ -1,0 +1,108 @@
+---
+title: "Idempotent Writes in the Scopable API"
+sidebarTitle: "Idempotency"
+description: "Send an Idempotency-Key header on every POST request so you can safely retry writes without creating duplicates or double-processing changes."
+---
+
+Every write request to the Scopable API requires an `Idempotency-Key` header. This lets you safely retry a request — for example after a network timeout — without accidentally creating duplicate records or applying the same change twice. Scopable records the key and the response the first time a write succeeds, and replays that stored response on any subsequent request that carries the same key.
+
+## How to send an idempotency key
+
+Include the `Idempotency-Key` header on every `POST` or `PATCH` request. Choose a value that uniquely identifies this specific operation — a UUID is the most common choice, but any stable, descriptive string works too.
+
+```bash
+curl -X POST https://api.scopable.io/v1/contacts \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: contact-ada-lovelace-001" \
+  -d '{
+    "clientId": "<client-id>",
+    "name": "Ada Lovelace",
+    "email": "[email protected]"
+  }'
+```
+
+<Tip>
+  Use a UUID (e.g., `crypto.randomUUID()` in Node.js or `uuid.uuid4()` in Python) as your idempotency key whenever you don't have a natural business identifier for the operation. Generate it once before the request and store it alongside the job so you can reuse it on retry.
+</Tip>
+
+## Key rules
+
+| Rule | Detail |
+|---|---|
+| **Max length** | 255 characters |
+| **Uniqueness scope** | Scoped to your API key — different API keys may reuse the same key string |
+| **Storage window** | Scopable retains keys for **24 hours** after the first successful write |
+| **Required on writes** | Omitting the header returns `400 validation_failed` |
+
+## What happens when you retry
+
+Scopable's behavior depends on whether the key and body match the original request:
+
+<AccordionGroup>
+  <Accordion title="Same key, same body — safe replay">
+    Scopable recognises the key, finds the stored response, and returns it immediately with a `409 conflict` status and error code `idempotency_replay`. No database write occurs. Treat the embedded original response as your result — the operation already succeeded.
+  </Accordion>
+  <Accordion title="Same key, different body — key reuse error">
+    Sending a different request body under an already-used key returns `409 conflict` with error code `idempotency_key_reused`. Generate a fresh key for the new operation; never reuse a key for a semantically different write.
+  </Accordion>
+  <Accordion title="New key — normal processing">
+    A key Scopable has never seen is treated as a new, independent operation. The request is processed normally and the response is stored under that key for 24 hours.
+  </Accordion>
+</AccordionGroup>
+
+## When to retry
+
+If a network timeout, connection reset, or `503 unavailable` response leaves you uncertain whether a write landed, resend the request with the **same idempotency key and the same body**. If the write had already succeeded, you get the original response back. If it hadn't, Scopable processes it now. Either way, you end up with exactly one successful write.
+
+<Warning>
+  Do not retry a `400 validation_failed` or `403 forbidden` response with the same key. These errors indicate a problem with the request itself — fix the request first, then generate a new idempotency key for the corrected payload.
+</Warning>
+
+## Generating keys in code
+
+<CodeGroup>
+
+```python Python
+import uuid, os, requests
+
+idempotency_key = str(uuid.uuid4())
+
+response = requests.post(
+    "https://api.scopable.io/v1/contacts",
+    headers={
+        "Authorization": f"Bearer {os.environ['SCOPABLE_API_KEY']}",
+        "Idempotency-Key": idempotency_key,
+    },
+    json={
+        "clientId": "<client-id>",
+        "name": "Ada Lovelace",
+        "email": "[email protected]",
+    },
+)
+print(response.json())
+```
+
+```javascript Node.js
+const response = await fetch("https://api.scopable.io/v1/contacts", {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.SCOPABLE_API_KEY}`,
+    "Content-Type": "application/json",
+    "Idempotency-Key": crypto.randomUUID(),
+  },
+  body: JSON.stringify({
+    clientId: "<client-id>",
+    name: "Ada Lovelace",
+    email: "[email protected]",
+  }),
+});
+
+console.log(await response.json());
+```
+
+</CodeGroup>
+
+<Note>
+  The 24-hour storage window means idempotency keys are **not** a long-term deduplication mechanism. For operations that may be retried days apart, build deduplication logic in your own application layer.
+</Note>

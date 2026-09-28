@@ -1,0 +1,102 @@
+---
+title: "Connect ConnectWise Manage to Scopable"
+sidebarTitle: "ConnectWise Manage"
+description: "Sync ConnectWise Manage companies, contacts, opportunities, configurations, and product catalog into Scopable for live-data quoting and client context."
+---
+
+Connecting ConnectWise Manage brings your companies, contacts, open opportunities, configurations, and product catalog into Scopable. Once the integration is live, client records populate automatically with PSA data and the quote wizard can pull from your ConnectWise product catalog — so every quote starts from accurate, up-to-date information.
+
+## What Syncs
+
+| ConnectWise Entity | Where It Appears in Scopable |
+|---|---|
+| Companies | Scopable clients (matched via client mappings) |
+| Contacts | Client → Contacts tab |
+| Opportunities | Client → Opportunities tab |
+| Configurations (assets) | Client → Configurations tab |
+| Products & pricing | Quote wizard product catalog |
+
+<Note>
+  Scopable has **read-only** access to ConnectWise Manage. It never creates, updates, or deletes records in your PSA.
+</Note>
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A ConnectWise Manage account with API access enabled
+- An **API Member** in ConnectWise with a Public Key and Private Key (see steps below)
+- **Admin** permissions in Scopable (or the **Manage Tenant Settings** permission)
+
+### Create an API Member in ConnectWise Manage
+
+ConnectWise Manage uses API Members to grant programmatic access. To generate API credentials:
+
+<Steps>
+  <Step title="Navigate to System → Members">
+    In ConnectWise Manage, go to **System → Members** and open the **API Members** tab.
+  </Step>
+  <Step title="Add a new API Member">
+    Click **+** to create a new API Member. Give it a recognizable name such as `Scopable Integration`.
+  </Step>
+  <Step title="Set permissions">
+    Assign the API member read access to the company, contact, opportunity, configuration, and product catalog areas. Scopable only reads these entities, but the API member must have explicit read permission for each.
+  </Step>
+  <Step title="Generate API keys">
+    Open the API Member record, navigate to the **API Keys** tab, and click **+** to generate a new key pair. Copy both the **Public Key** and **Private Key** — ConnectWise only shows the private key once.
+  </Step>
+</Steps>
+
+## Connect ConnectWise Manage to Scopable
+
+<Steps>
+  <Step title="Open the integration settings">
+    In Scopable, go to **Settings → Integrations → ConnectWise Manage** and click **Connect**.
+  </Step>
+  <Step title="Enter your server URL">
+    In the **Server URL** field, enter your ConnectWise Manage host. This is the domain you use to access ConnectWise — for example:
+
+    ```
+    na.myconnectwise.net
+    ```
+
+    Do not include `https://` or a trailing slash.
+  </Step>
+  <Step title="Enter your credentials">
+    Fill in the three credential fields:
+
+    | Field | Where to find it |
+    |---|---|
+    | **Company ID** | The company identifier you use on the ConnectWise login screen |
+    | **Public Key** | Copied from the API Member's API Keys tab |
+    | **Private Key** | Copied from the API Member's API Keys tab at creation time |
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect**. Scopable validates your credentials against the ConnectWise API. If validation succeeds, the initial sync starts immediately.
+  </Step>
+  <Step title="Review client mappings">
+    Once the initial sync completes, navigate to **Settings → Integrations → ConnectWise Manage → Client Mappings** and confirm that your ConnectWise companies have been matched to the correct Scopable clients. See [Client Mappings](/integrations/client-mappings) for detailed instructions.
+  </Step>
+</Steps>
+
+## Sync Frequency and Manual Re-sync
+
+Scopable syncs ConnectWise Manage data on a regular schedule. If you need to pull the latest data immediately — for example, after adding a new company or updating pricing in ConnectWise — trigger a manual re-sync from **Settings → Integrations → ConnectWise Manage → Sync Now**.
+
+## Troubleshooting
+
+<Accordion title="Connection failed: invalid credentials">
+  Double-check that you've entered the correct **Company ID**, **Public Key**, and **Private Key**. API keys are case-sensitive. If the keys were recently regenerated in ConnectWise, make sure you're using the newest pair — old keys are invalidated when new ones are created.
+</Accordion>
+
+<Accordion title="Sync is failing after a previously successful connection">
+  API keys in ConnectWise Manage can expire or be manually revoked. Go to **ConnectWise Manage → System → Members → API Members → [Your API Member] → API Keys** and check whether the key is still active. If it has been revoked or expired, generate a new key pair and re-enter the credentials in **Settings → Integrations → ConnectWise Manage → Edit Credentials**.
+</Accordion>
+
+<Accordion title="Some companies aren't appearing in client mappings">
+  Only **Active** companies in ConnectWise Manage are pulled into Scopable. Inactive or archived companies are skipped. If you expect a company to appear but it doesn't, check its status in ConnectWise Manage.
+</Accordion>
+
+<Accordion title="Products aren't showing up in the quote wizard">
+  Product catalog sync requires that your API Member has read access to the **Product Catalog** area in ConnectWise. Review the API Member's permissions and trigger a manual re-sync after correcting access.
+</Accordion>

@@ -1,0 +1,86 @@
+---
+title: "Authenticate Requests to the Scopable API"
+sidebarTitle: "Authentication"
+description: "Generate API keys in Settings → Developer, pass them as Bearer tokens in the Authorization header, and follow key security best practices."
+---
+
+The Scopable API uses API keys for authentication — pass your key as a Bearer token in the `Authorization` header on every request. There are no session cookies, OAuth flows, or expiring JWTs to manage; the key is the credential. Keep it secret, keep it scoped to exactly what your integration needs, and rotate it the moment it's ever exposed.
+
+## Generate an API key
+
+You must be an **Admin** to create API keys. Keys are tenant-scoped — each key you generate has access only to data within your Scopable workspace.
+
+<Steps>
+  <Step title="Open Settings → Developer">
+    Log in to [app.scopable.io](https://app.scopable.io) as an Admin, then navigate to **Settings → Developer**.
+  </Step>
+  <Step title="Create a new key">
+    Click **Create API Key**. Give the key a descriptive name (for example, `connectwise-sync` or `internal-reporting`) so you can identify it later.
+  </Step>
+  <Step title="Choose a mode and scopes">
+    Select **Live** or **Test** mode, then tick the scopes your integration actually needs. See [Available scopes](#available-scopes) below for the full list.
+  </Step>
+  <Step title="Copy the key immediately">
+    Scopable displays the full key **only once**, immediately after creation. Copy it to your secrets manager now — once you close the dialog it cannot be retrieved. If you lose a key, generate a new one.
+  </Step>
+</Steps>
+
+## Key types
+
+Scopable issues two formats of key, distinguished by their prefix:
+
+| Prefix | Mode | Effect |
+|---|---|---|
+| `sk_live_...` | **Live** | Reads and writes your real tenant data |
+| `sk_test_...` | **Test / Sandbox** | Safe for building and debugging — changes do not affect live records |
+
+Use `sk_test_` keys during development and CI so a bad script or misconfigured automation can never corrupt production data. Switch to `sk_live_` only when you're ready to go live.
+
+## Available scopes
+
+Scopes limit what a key is permitted to do. Assign only the scopes an integration actually needs.
+
+| Scope | Permits |
+|---|---|
+| `clients:read` | `GET` requests for client records and lists |
+| `clients:write` | `POST`, `PATCH`, `DELETE` requests that modify clients |
+| `contacts:read` | `GET` requests for contact records and lists |
+| `contacts:write` | `POST`, `PATCH`, `DELETE` requests that modify contacts |
+
+A `clients:write` key does **not** imply `clients:read` — grant both if your integration needs to read and write.
+
+## Send the key on every request
+
+Pass your API key as a `Bearer` token in the `Authorization` header:
+
+```bash
+curl https://api.scopable.io/v1/clients \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+There is no other supported authentication mechanism. Requests that omit the header, or that carry an unrecognized or revoked key, receive a `401 unauthorized` response.
+
+## Authentication errors
+
+| Situation | HTTP status | Error code |
+|---|---|---|
+| No `Authorization` header | `401` | `unauthorized` |
+| Key is unknown or revoked | `401` | `unauthorized` |
+| Key exists but lacks the required scope | `403` | `forbidden` |
+
+A `403 forbidden` means the key is valid but doesn't have the scope for this operation. Regenerate the key with the correct scopes rather than trying to reuse the existing one.
+
+## Security best practices
+
+<Warning>
+  Never commit an API key to source control — even a private repository. A leaked key gives anyone who finds it full access to every scope it carries.
+</Warning>
+
+- **Environment variables or secrets manager** — store keys in environment variables (e.g., `SCOPABLE_API_KEY`) or a dedicated secrets manager such as AWS Secrets Manager, HashiCorp Vault, or 1Password Secrets Automation. Never hard-code a key in your source.
+- **Principle of least privilege** — grant only the scopes an integration actually needs. A reporting dashboard needs `clients:read` and `contacts:read` only.
+- **Rotate immediately on exposure** — if a key is ever accidentally logged, pushed to a repository, or otherwise exposed, go to **Settings → Developer**, revoke it, and generate a replacement.
+- **Revoke unused keys** — audit your keys periodically in **Settings → Developer** and revoke any that are no longer in use.
+
+<Note>
+  Scopable stores only a cryptographic hash of each key — support cannot recover a lost key. If you lose access to a key, revoke it and create a new one.
+</Note>

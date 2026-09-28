@@ -1,0 +1,122 @@
+---
+title: "Search Your Global Product Catalog in Scopable"
+sidebarTitle: "Products Page"
+description: "The Products page provides a unified search across your managed catalog and every connected distributor — find any product, see live pricing, and add it to a quote instantly."
+---
+
+The Products page gives you a single search interface across your entire managed catalog and all connected distributor feeds. Instead of switching between PSA product lists or logging into separate distributor portals, you can search once and see results from every source your account is connected to — with live pricing and availability where supported.
+
+<Note>
+  The Products page is currently in **Alpha** and is available to a limited
+  group of Scopable accounts. If you don't see it in your left navigation, your
+  account may not have access yet. Reach out to
+  [support@scopable.com](mailto:support@scopable.com) to request early access.
+</Note>
+
+## What You Can Search
+
+The Products page searches across all sources that are active in your Scopable account:
+
+<CardGroup cols={2}>
+  <Card title="Your Saved Catalog" icon="bookmark">
+    Products you've manually added or imported into Scopable, including custom
+    services, recurring managed services items, and one-time hardware bundles.
+  </Card>
+  <Card title="Pax8" icon="box">
+    Full Pax8 product catalog with live pricing when your Pax8 integration is
+    connected. Includes cloud subscriptions and software licenses.
+  </Card>
+  <Card title="Ingram Micro" icon="warehouse">
+    Search Ingram Micro's catalog for hardware, software, and accessories with
+    real-time availability when your Ingram integration is active.
+  </Card>
+  <Card title="TD SYNNEX StreamOne Ion" icon="network-wired">
+    Access TD SYNNEX's StreamOne Ion catalog directly, including cloud and
+    as-a-service products, with live pricing from your account feed.
+  </Card>
+  <Card title="CDW" icon="server">
+    Search CDW's product database for hardware and device procurement options
+    when your CDW integration is connected.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Connect at least one distributor integration before using the Products page.
+  Without a distributor connected, you'll only see your saved catalog — you
+  won't get live pricing or availability data.
+</Tip>
+
+## Search for a Product
+
+<Steps>
+  <Step title="Navigate to the Products page">
+    Click **Products** in the left navigation sidebar. If you don't see it,
+    check with your Scopable Admin — the Products page may need to be enabled
+    for your account or your user role.
+  </Step>
+
+  <Step title="Enter your search query">
+    Type a product name, part number, manufacturer SKU, or keyword into the
+    search bar at the top of the page. Results load as you type and pull from
+    all connected sources simultaneously.
+  </Step>
+
+  <Step title="Filter by source">
+    Use the **Source** filter to narrow results to a specific distributor or
+    your own catalog. This is especially useful when you already know which
+    vendor you want to procure from, or when the same product appears across
+    multiple catalogs at different price points.
+  </Step>
+
+  <Step title="Review pricing and availability">
+    Each result shows the product name, part number, source, unit cost, and
+    availability status (where the distributor API supports it). Compare across
+    sources to find the best rate or the fastest availability before committing.
+  </Step>
+</Steps>
+
+## Add a Product to a Quote
+
+You can add any product you find in the Products page directly to an open quote without going back to the Quote Wizard.
+
+<Steps>
+  <Step title="Find the product">
+    Search and locate the product using the steps above.
+  </Step>
+
+  <Step title="Select the product">
+    Click the product row to expand its details, or check the checkbox next to
+    it to select it for bulk actions.
+  </Step>
+
+  <Step title="Add to quote">
+    Click **Add to Quote** and select the target quote from the dropdown. If
+    you have a quote open in another tab, it will appear in the list. The
+    product is added as a new line item with the current pricing from the
+    selected source.
+  </Step>
+
+  <Step title="Adjust scope in the quote">
+    After adding, open the quote to set the quantity, term, and client-facing
+    description for the newly added line item.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Quote Wizard"
+    icon="wand-magic-sparkles"
+    href="/quoting/quote-wizard"
+  >
+    Build a full quote step by step, with product search built into the flow.
+  </Card>
+  <Card
+    title="Quote Designer"
+    icon="paintbrush"
+    href="/quoting/quote-designer"
+  >
+    Customize the branded layout your clients see when you deliver a quote.
+  </Card>
+</CardGroup>

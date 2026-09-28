@@ -1,0 +1,77 @@
+---
+title: "Connect Liongard to Scopable"
+sidebarTitle: "Liongard"
+description: "Generate a read-only Liongard access key pair, connect to Scopable, and map environments to clients to surface environment intelligence in client records."
+---
+
+The Liongard integration connects your Liongard environments to Scopable clients and brings environment intelligence into each client record. Once mapped, the data Liongard has collected about a client's environment is accessible directly in Scopable — enriching your QBR preparation, assessment work, and Co-Work AI conversations without requiring you to switch between platforms.
+
+## What Syncs
+
+| Liongard Entity | Where It Appears in Scopable |
+|---|---|
+| Environments | Client mapping candidates |
+| Environment enrichment data | Client record — surfaces as context for QBRs, Co-Work AI, and assessments |
+
+<Note>
+  Scopable uses **read-only** access to Liongard. It never writes back to your Liongard account, creates environments, or modifies any Liongard records.
+</Note>
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A Liongard account with permission to generate access keys
+- **Admin** permissions in Scopable (or the **Manage Tenant Settings** permission)
+
+## Step 1: Generate a Read-Only Access Key in Liongard
+
+<Steps>
+  <Step title="Open Access Keys">
+    In Liongard, navigate to **Settings → Access Keys**.
+  </Step>
+  <Step title="Create a new key">
+    Click **Create Key**. Give the key a descriptive name such as `Scopable Integration`.
+  </Step>
+  <Step title="Set the permission level to Read Only">
+    When prompted, set the key's permission level to **Read Only**. This restricts Scopable to reading environment data — it cannot make any changes in Liongard.
+  </Step>
+  <Step title="Copy the credentials">
+    After creating the key, Liongard displays an **Access Key ID** and a **Secret**. Copy both immediately — the secret is only shown once. If you lose it, you'll need to delete the key and create a new one.
+  </Step>
+</Steps>
+
+## Step 2: Connect Liongard to Scopable
+
+<Steps>
+  <Step title="Open the integration settings">
+    In Scopable, go to **Settings → Integrations → Liongard** and click **Connect**.
+  </Step>
+  <Step title="Enter the access key credentials">
+    Enter the **Access Key ID** and **Secret** you copied from Liongard.
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect**. Scopable validates the credentials and fetches your Liongard environments.
+  </Step>
+  <Step title="Map Liongard environments to Scopable clients">
+    Once environments have been fetched, navigate to **Settings → Integrations → Liongard → Client Mappings**. Map each Liongard environment to the corresponding Scopable client. Environments without a mapping won't contribute data to any client record. See [Client Mappings](/integrations/client-mappings) for detailed instructions.
+  </Step>
+</Steps>
+
+## Sync Frequency and Manual Re-sync
+
+Liongard environment data syncs on a regular schedule. To pull the latest intelligence immediately, go to **Settings → Integrations → Liongard → Sync Now**.
+
+## Troubleshooting
+
+<Accordion title="Connection failed: invalid access key">
+  Verify that you copied both the **Access Key ID** and the **Secret** accurately. Both are case-sensitive. If you're unsure whether the secret is correct, delete the key in Liongard, create a new one, and enter the fresh credentials in Scopable.
+</Accordion>
+
+<Accordion title="An environment is not appearing in the mappings list">
+  Liongard environments that are archived or paused may not be included in the sync. Check the environment's status in Liongard and, if needed, reactivate it before retrying.
+</Accordion>
+
+<Accordion title="Environment data isn't showing on a client record">
+  Environment enrichment data only flows into client records for environments with a confirmed mapping. Go to **Settings → Integrations → Liongard → Client Mappings**, confirm the mapping for that environment, and trigger a manual re-sync.
+</Accordion>

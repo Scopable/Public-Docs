@@ -1,30 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "projectType": "saas",
+  "projectName": "Scopable",
+  "projectDescription": "Scopable is the quoting and vCIO platform for MSPs — a connected workspace that brings client records, CPQ, assessments, GRC, Co-Work AI, and integrations together in one place.",
   "theme": "almond",
-  "name": "Scopable",
-  "colors": {
-    "primary": "#ef7025",
-    "light": "#eec9bc",
-    "dark": "#4fa1ab"
-  },
-  "favicon": "/favicon.svg",
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@scopable.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Get Started Free",
-      "href": "https://app.scopable.io/login"
-    }
-  },
+  "primaryColor": "#ef7025",
+  "lightColor": "#eec9bc",
+  "darkColor": "#4fa1ab",
   "navigation": {
     "tabs": [
       {
@@ -166,11 +147,33 @@
       }
     ]
   },
-  "footer": {
-    "socials": {
-      "instagram": "https://www.instagram.com/scopable/",
-      "youtube": "https://www.youtube.com/@Scopable",
-      "linkedin": "https://www.linkedin.com/company/scopable/"
-    }
-  }
+  "keyFeatures": [
+    "Quote Wizard — build and send branded quotes from live client data with built-in approval workflow",
+    "Co-Work AI — conversational AI assistant with per-client context and configurable skills",
+    "vCIO & QBR — run quarterly business reviews and roadmaps from current client data",
+    "GRC & Compliance — track frameworks, evidence, and compliance gaps across clients",
+    "Assessments & Scoping — turn findings into scope before quote work",
+    "Automations & Workflows — event-driven automation for quotes, opportunities, approvals, and compliance",
+    "PSA integrations — ConnectWise Manage, Halo PSA with full bi-directional sync",
+    "RMM integrations — NinjaOne, Liongard, IT Glue for environment intelligence",
+    "Microsoft integrations — Microsoft 365 and Azure/Partner Center with AI cost optimization",
+    "Distributor integrations — Pax8, Ingram Micro, TD SYNNEX, CDW for live catalog and pricing",
+    "REST API — versioned /v1 surface for reading and writing clients and contacts",
+    "Outbound webhooks — HMAC-signed payloads for client and contact change events",
+    "Quote Designer — branded PDF templates with cover, flowing sections, and closing blocks",
+    "Saved Views — per-user saved search, filter, sort, and column configurations"
+  ],
+  "publicApiSurface": [
+    "GET /v1/clients — list clients with cursor pagination",
+    "GET /v1/clients/{clientId} — get a single client",
+    "POST /v1/clients/{clientId} — update a client",
+    "GET /v1/contacts/search — search contacts by name or email, optionally scoped to a clientId",
+    "POST /v1/contacts — create a contact",
+    "POST /v1/contacts/{contactId} — update a contact",
+    "POST /v1/contacts/{contactId}/archive — archive a contact",
+    "POST /v1/contacts/{contactId}/restore — restore an archived contact",
+    "POST /v1/contacts/{contactId}/set-default — make a contact the client's default",
+    "Outbound webhooks — HMAC-signed client.updated and contact.* event payloads",
+    "OpenAPI document — https://scopable.io/openapi.json"
+  ]
 }

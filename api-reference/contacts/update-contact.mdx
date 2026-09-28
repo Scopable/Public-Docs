@@ -1,0 +1,159 @@
+---
+title: "POST /v1/contacts/{contactId} — Update a Contact"
+sidebarTitle: "Update Contact"
+description: "Update fields on an existing contact. Omit a field to leave it unchanged, or send it as null to clear its stored value entirely."
+---
+
+The Update Contact endpoint modifies one or more fields on an existing contact record. Send only the fields you want to change — any field you omit stays exactly as it is. To erase a field's current value, send it explicitly as `null`. This endpoint requires the `contacts:write` scope and an `Idempotency-Key` header on every request.
+
+## Endpoint
+
+```
+POST https://api.scopable.io/v1/contacts/{contactId}
+```
+
+## Required Headers
+
+| Header | Description |
+|---|---|
+| `Authorization` | `Bearer <your-api-key>` |
+| `Content-Type` | `application/json` |
+| `Idempotency-Key` | A unique string that makes this request safe to retry. |
+
+## Path Parameters
+
+<ParamField path="contactId" type="string" required>
+  The UUID of the contact to update. Must belong to your Scopable tenant.
+</ParamField>
+
+## Request Body
+
+All fields are optional. Include only the fields you want to change.
+
+<ParamField body="name" type="string">
+  Updated full name of the contact. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="email" type="string">
+  Updated email address. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Updated phone number. Send `null` to clear the value.
+</ParamField>
+
+<ParamField body="title" type="string">
+  Updated job title. Send `null` to clear the value.
+</ParamField>
+
+<Note>
+  Sending a field as `null` clears its stored value. Omitting a field entirely leaves its current value unchanged. These are two distinct operations.
+</Note>
+
+## Example Request
+
+```bash
+curl -X POST "https://api.scopable.io/v1/contacts/abc123" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: update-ada-title-001" \
+  -d '{"title":"Technical Director"}'
+```
+
+## Example Response
+
+```json
+{
+  "id": "abc123",
+  "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Ada Lovelace",
+  "email": "[email protected]",
+  "phone": null,
+  "title": "Technical Director",
+  "isDefault": true,
+  "archivedAt": null,
+  "createdAt": "2026-09-20T09:41:57Z",
+  "updatedAt": "2026-09-21T14:22:05Z"
+}
+```
+
+## Response Fields
+
+<ResponseField name="id" type="string" required>
+  Unique UUID identifier for the contact.
+</ResponseField>
+
+<ResponseField name="clientId" type="string" required>
+  UUID of the client this contact belongs to.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Full name of the contact.
+</ResponseField>
+
+<ResponseField name="email" type="string | null">
+  Email address of the contact.
+</ResponseField>
+
+<ResponseField name="phone" type="string | null">
+  Phone number of the contact.
+</ResponseField>
+
+<ResponseField name="title" type="string | null">
+  Job title of the contact.
+</ResponseField>
+
+<ResponseField name="isDefault" type="boolean" required>
+  Whether this contact is the client's default (primary) contact.
+</ResponseField>
+
+<ResponseField name="archivedAt" type="string | null">
+  ISO 8601 timestamp of when the contact was archived, or `null` if active.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string" required>
+  ISO 8601 timestamp of when the contact was created in Scopable.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string" required>
+  ISO 8601 timestamp of the most recent update, reflecting your change.
+</ResponseField>
+
+## Additional Contact Actions
+
+Beyond updating fields, three additional POST endpoints let you manage a contact's status and default assignment:
+
+<CardGroup cols={2}>
+  <Card title="Set as Default" icon="star">
+    **`POST /v1/contacts/{contactId}/set-default`**
+
+    Promotes this contact to the client's primary contact, demoting any existing default. Requires `contacts:write` scope.
+  </Card>
+  <Card title="Archive Contact" icon="box-archive">
+    **`POST /v1/contacts/{contactId}/archive`**
+
+    Hides the contact from active views and clears its default-contact flag if set. See [Archive & Restore](/api-reference/contacts/archive-restore-contact).
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card title="Restore Contact" icon="rotate-left">
+    **`POST /v1/contacts/{contactId}/restore`**
+
+    Brings an archived contact back to active status. See [Archive & Restore](/api-reference/contacts/archive-restore-contact).
+  </Card>
+</CardGroup>
+
+All three action endpoints require an `Idempotency-Key` header and the `contacts:write` scope. Pass an empty JSON object (`{}`) as the request body.
+
+## Error Responses
+
+| HTTP Status | Error Code | Meaning |
+|---|---|---|
+| `400` | `validation_failed` | One or more field values failed validation. |
+| `401` | `unauthorized` | Missing or invalid API key. |
+| `403` | `forbidden` | Your API key does not have the `contacts:write` scope. |
+| `404` | `not_found` | No contact with that ID exists in your tenant. |
+| `409` | `conflict` | A request with the same `Idempotency-Key` was already completed with a different body. |
+| `429` | `rate_limited` | You have exceeded 60 write requests per minute. |
+| `503` | `unavailable` | Scopable is temporarily unavailable — retry with backoff. |

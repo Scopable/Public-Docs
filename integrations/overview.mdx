@@ -1,0 +1,110 @@
+---
+title: "Connect Your Tools to Scopable: Integrations Overview"
+sidebarTitle: "Overview"
+description: "Connect your PSA, RMM, Microsoft, and distributor accounts to Scopable so quoting, QBRs, and compliance always run on live data — not manual exports."
+---
+
+Scopable integrations pull your existing data into the platform so you can quote, run QBRs, and manage compliance from live information — not manual exports. Once an integration is connected, Scopable syncs on a regular schedule and surfaces that data across client records, quotes, assessments, and Co-Work AI — no copy-pasting required.
+
+<Note>
+  Connecting or managing integrations requires the **Manage Tenant Settings** permission. If you don't see the Integrations section in Settings, ask your Scopable Admin to grant you access.
+</Note>
+
+## Where to Manage Integrations
+
+Navigate to **Settings → Integrations** to view, connect, and configure every integration. Each integration tile shows its current status (connected, syncing, error, or not connected) and links to its configuration and client mapping pages.
+
+## Integration Categories
+
+Scopable organizes its integrations into five categories based on the type of data they provide.
+
+### PSA Systems
+
+PSA integrations are the backbone of your client data in Scopable. They sync companies, contacts, open opportunities, configuration items, and your product catalog.
+
+<CardGroup cols={2}>
+  <Card title="ConnectWise Manage" icon="plug" href="/integrations/connectwise-manage">
+    Sync companies, contacts, opportunities, configurations, and product pricing from ConnectWise Manage
+  </Card>
+  <Card title="Halo PSA" icon="plug" href="/integrations/halo-psa">
+    Sync clients, sites, contacts, products, assets, opportunities, and contracts from Halo PSA
+  </Card>
+</CardGroup>
+
+### RMM & Documentation
+
+RMM and documentation integrations bring device inventory and environment intelligence into each client record, giving you the asset context you need for accurate quotes and QBRs.
+
+<CardGroup cols={2}>
+  <Card title="NinjaOne RMM" icon="server" href="/integrations/ninjaone-rmm">
+    Pull managed organizations and device inventory from NinjaOne into Scopable client records
+  </Card>
+  <Card title="Liongard" icon="eye" href="/integrations/liongard">
+    Bring Liongard environment intelligence into Scopable clients via read-only access keys
+  </Card>
+  <Card title="IT Glue (Beta)" icon="book" href="/integrations/it-glue">
+    Pull IT Glue organizations and configuration items and link them to your Scopable clients
+  </Card>
+</CardGroup>
+
+### Microsoft
+
+Microsoft integrations connect Scopable to your clients' Microsoft 365 tenants and your Azure Partner Center (CSP) account, surfacing user counts, MFA posture, license assignments, subscription costs, and AI optimization opportunities.
+
+- **Microsoft 365** — users, MFA status, and license data per client tenant
+- **Azure / Partner Center (CSP)** — CSP subscription inventory, cost data, and AI-assisted optimization recommendations
+
+### Distributors
+
+Distributor integrations pull live product catalog data, pricing, and availability directly into the Scopable quoting engine. When you build a quote, Scopable fetches real-time pricing from every connected distributor so your margins are always based on current costs.
+
+- **Pax8** — cloud products and licensing
+- **Ingram Micro** — hardware, software, and cloud catalog
+- **TD SYNNEX** — full product catalog with live pricing
+- **CDW** — hardware and solution pricing
+
+### Other
+
+- **SimpleSAT** — imports customer satisfaction scores and feedback into client records so you can see CSAT trends alongside your QBR and renewal data
+
+## How Integrations Work
+
+<Steps>
+  <Step title="Connect the integration">
+    Go to **Settings → Integrations**, select the integration you want to add, and follow the connection wizard. Each integration walks you through the credentials it needs.
+  </Step>
+  <Step title="Scopable runs an initial sync">
+    After successful authentication, Scopable immediately pulls your organizations, contacts, and catalog data. Initial syncs can take a few minutes depending on the size of your data set.
+  </Step>
+  <Step title="Review client mappings">
+    Scopable automatically tries to match external organizations to your Scopable clients by name. Review the results at **Settings → Integrations → [Integration] → Client Mappings** and confirm, adjust, or add mappings manually.
+  </Step>
+  <Step title="Data flows into your workspace">
+    Once mappings are confirmed, synced data appears in client records, the quote wizard, Co-Work AI context, and assessments. Scopable re-syncs on a regular schedule to keep everything current.
+  </Step>
+</Steps>
+
+<Info>
+  Scopable **never writes back** to your source systems unless the integration documentation explicitly states otherwise. All integrations listed here are read-only.
+</Info>
+
+## Sync Frequency and Manual Re-sync
+
+Each integration syncs automatically on a recurring schedule. If you need fresh data immediately — for example, before starting a QBR or building a renewal quote — you can trigger a manual re-sync from **Settings → Integrations → [Integration] → Sync Now**.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Client Mappings" icon="arrows-left-right" href="/integrations/client-mappings">
+    Learn how to review, confirm, and manually adjust how external organizations map to your Scopable clients
+  </Card>
+  <Card title="ConnectWise Manage" icon="plug" href="/integrations/connectwise-manage">
+    Step-by-step guide to connecting your ConnectWise Manage instance
+  </Card>
+  <Card title="Halo PSA" icon="plug" href="/integrations/halo-psa">
+    Step-by-step guide to connecting your Halo PSA instance
+  </Card>
+  <Card title="NinjaOne RMM" icon="server" href="/integrations/ninjaone-rmm">
+    Connect NinjaOne to pull device inventory into Scopable client records
+  </Card>
+</CardGroup>

@@ -1,0 +1,65 @@
+---
+title: "Connect Microsoft 365 to Scopable"
+sidebarTitle: "Microsoft 365"
+description: "Connect Microsoft 365 to discover managed tenants and sync users, MFA enrollment status, and license assignments into Scopable client records."
+---
+
+The Microsoft 365 integration discovers your managed customer tenants and pulls users, MFA enrollment status, and license assignments directly into Scopable — no app registration required. Once connected, every mapped client gets a dedicated Microsoft 365 tab giving you an at-a-glance view of your customers' identity posture and licensing without switching tools.
+
+## What syncs
+
+| Data | Details |
+|------|---------|
+| **Managed customer tenants** | Fetched from your delegated admin relationships and matched to Scopable clients |
+| **Users** | Display name, UPN, account status, and last sign-in |
+| **MFA enrollment status** | Per-user MFA registered / not registered |
+| **License assignments** | Product name and assigned seat count per user |
+
+## Prerequisites
+
+Before connecting, confirm you have:
+
+- A Microsoft 365 account with **Global Administrator** access or appropriate delegated admin permissions across your managed customer tenants
+- **Admin** permissions in Scopable
+
+## Connect Microsoft 365
+
+<Steps>
+  <Step title="Open the Microsoft 365 integration">
+    In Scopable, go to **Settings → Integrations → Microsoft 365** and click **Connect**.
+  </Step>
+  <Step title="Sign in with Microsoft">
+    Click **Sign in with Microsoft**. You are redirected to Microsoft's sign-in and consent screen. Sign in with your admin account and approve the requested permissions.
+  </Step>
+  <Step title="Tenant fetch begins">
+    Scopable retrieves your managed customer tenants and starts matching them to your existing Scopable clients. This initial fetch typically completes within a few minutes.
+  </Step>
+  <Step title="Review client mappings">
+    Navigate to **Settings → Integrations → Microsoft 365 → Client Mappings**. Confirm auto-matched clients and manually link any tenants that weren't matched automatically.
+  </Step>
+</Steps>
+
+<Note>
+  No app registration is required. Scopable uses a managed, Microsoft-verified application — there are no client secrets or certificates for you to manage or rotate.
+</Note>
+
+## After connecting
+
+Once a tenant is mapped to a client, open that client record and select the **Microsoft 365** tab. You'll see:
+
+- A full user list with display name and UPN
+- Each user's MFA enrollment status (**Registered** or **Not registered**)
+- License assignments with product names and quantities
+
+Use this view during QBRs or security reviews to quickly identify users without MFA enrolled or seats that may be over- or under-provisioned.
+
+## Microsoft 365 vs. Azure / Partner Center
+
+<Note>
+  The Microsoft 365 and Azure / Partner Center integrations are separate connections that cover different data sets.
+
+  - **Microsoft 365** — users, MFA status, and license assignments
+  - **Azure / Partner Center** — CSP subscriptions, spend data, and AI cost-optimization recommendations
+
+  You can connect both integrations independently. See [Connect Azure Partner Center to Scopable](/integrations/azure-partner-center) for details on the Azure side.
+</Note>

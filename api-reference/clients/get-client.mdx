@@ -1,0 +1,134 @@
+---
+title: "GET /v1/clients/{clientId} — Get a Client"
+sidebarTitle: "Get Client"
+description: "Fetch a single client by its unique ID. Returns the full client object, or a 404 error if the client is not found in your tenant."
+---
+
+The Get Client endpoint fetches a single client record by its Scopable UUID. Use this endpoint when you already have a `clientId` — for example, from a webhook payload or a previous list response — and need the complete, up-to-date client object. This endpoint requires the `clients:read` scope.
+
+## Endpoint
+
+```
+GET https://api.scopable.io/v1/clients/{clientId}
+```
+
+## Path Parameters
+
+<ParamField path="clientId" type="string" required>
+  The UUID of the client to fetch. Must belong to your Scopable tenant.
+</ParamField>
+
+## Example Request
+
+```bash
+curl "https://api.scopable.io/v1/clients/3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+## Example Response
+
+```json
+{
+  "id": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+  "name": "Acme IT",
+  "website": "https://acme.example",
+  "industry": "Information Technology",
+  "phone": "+1-555-010-0001",
+  "contactEmail": "[email protected]",
+  "contactName": "Ada Lovelace",
+  "address": "123 Main Street",
+  "addressLine2": "Suite 400",
+  "city": "Austin",
+  "state": "TX",
+  "zipCode": "78701",
+  "country": "US",
+  "employeeCount": 42,
+  "annualRevenue": 5000000,
+  "createdAt": "2026-08-22T14:03:11Z",
+  "updatedAt": "2026-09-20T09:41:57Z"
+}
+```
+
+## Response Fields
+
+<ResponseField name="id" type="string" required>
+  Unique UUID identifier for the client within Scopable.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Display name of the client as it appears in Scopable.
+</ResponseField>
+
+<ResponseField name="website" type="string | null">
+  Client's website URL.
+</ResponseField>
+
+<ResponseField name="industry" type="string | null">
+  Industry classification for the client.
+</ResponseField>
+
+<ResponseField name="phone" type="string | null">
+  Primary phone number for the client.
+</ResponseField>
+
+<ResponseField name="contactEmail" type="string | null">
+  Email address of the client's default contact.
+</ResponseField>
+
+<ResponseField name="contactName" type="string | null">
+  Full name of the client's default contact.
+</ResponseField>
+
+<ResponseField name="address" type="string | null">
+  Street address line 1.
+</ResponseField>
+
+<ResponseField name="addressLine2" type="string | null">
+  Street address line 2 (suite, floor, etc.).
+</ResponseField>
+
+<ResponseField name="city" type="string | null">
+  City.
+</ResponseField>
+
+<ResponseField name="state" type="string | null">
+  State or province.
+</ResponseField>
+
+<ResponseField name="zipCode" type="string | null">
+  Postal or ZIP code.
+</ResponseField>
+
+<ResponseField name="country" type="string | null">
+  Country name or ISO code.
+</ResponseField>
+
+<ResponseField name="employeeCount" type="integer | null">
+  Number of employees at the client organization.
+</ResponseField>
+
+<ResponseField name="annualRevenue" type="number | null">
+  Client's annual revenue in your account's default currency.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string" required>
+  ISO 8601 timestamp of when the client was created in Scopable.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string" required>
+  ISO 8601 timestamp of the most recent update to the client record.
+</ResponseField>
+
+## Error Responses
+
+<Note>
+  If a `clientId` belongs to a different tenant, Scopable returns `404 not_found` — not `403 forbidden`. This prevents your integration from inferring whether a given UUID exists in another tenant.
+</Note>
+
+| HTTP Status | Error Code | Meaning |
+|---|---|---|
+| `401` | `unauthorized` | Missing or invalid API key. |
+| `403` | `forbidden` | Your API key does not have the `clients:read` scope. |
+| `404` | `not_found` | No client with that ID exists in your tenant. |
+| `429` | `rate_limited` | You have exceeded 600 read requests per minute. |
+| `503` | `unavailable` | Scopable is temporarily unavailable — retry with backoff. |

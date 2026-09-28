@@ -1,0 +1,71 @@
+---
+title: "Sign In with Passkeys on Scopable"
+sidebarTitle: "Passkeys"
+description: "Add a passkey to your Scopable account for fast, passwordless sign-in using biometrics, Windows Hello, or a hardware security key on any trusted device."
+---
+
+Passkeys are a passwordless sign-in method that replaces your password with a cryptographic credential stored on your device. Instead of typing a password, you authenticate with Face ID, Touch ID, Windows Hello, or a hardware security key — making sign-in both faster and more secure. Scopable supports passkeys alongside traditional email and password sign-in, so you can use whichever method suits each device.
+
+## Prerequisites
+
+Before you add a passkey, make sure you have:
+
+- An active Scopable account with a verified email address.
+- A trusted device or hardware security key that supports passkeys — most modern smartphones, laptops, and browsers qualify.
+- Your browser updated to a recent version (Chrome 108+, Safari 16+, Edge 108+, or Firefox 122+).
+
+## Add a passkey to your account
+
+<Steps>
+  <Step title="Open Security settings">
+    Sign in to [app.scopable.io](https://app.scopable.io), click your avatar or workspace name in the bottom-left corner, and navigate to **Settings → Security**.
+  </Step>
+  <Step title="Go to the Passkeys section">
+    Scroll to the **Passkeys** section and click **Add passkey**.
+  </Step>
+  <Step title="Name your passkey">
+    Enter a descriptive name for this passkey — for example, *MacBook Pro* or *iPhone 15* — so you can identify it later when managing multiple passkeys.
+  </Step>
+  <Step title="Follow your browser or device prompt">
+    Your browser or operating system will display a prompt asking you to authenticate. Depending on your device, this may be a Face ID scan, a fingerprint, a PIN, or a tap on a hardware security key. Complete the prompt to register the passkey.
+  </Step>
+  <Step title="Confirm the passkey was added">
+    The new passkey appears in your passkey list with the name you chose and the date it was created. You can now use it to sign in on this device.
+  </Step>
+</Steps>
+
+<Tip>
+  Add a passkey on every device you regularly use — your work laptop, home computer, and phone. Each device stores its own credential, and having passkeys on multiple devices means you're never locked out if one device is unavailable.
+</Tip>
+
+## Sign in with a passkey
+
+<Steps>
+  <Step title="Go to the Scopable login page">
+    Navigate to [app.scopable.io](https://app.scopable.io).
+  </Step>
+  <Step title="Click Sign in with a passkey">
+    Below the email and password fields, click **Sign in with a passkey**.
+  </Step>
+  <Step title="Authenticate on your device">
+    Your browser or operating system presents an authentication prompt. Complete the biometric scan, enter your PIN, or tap your hardware security key to finish signing in.
+  </Step>
+</Steps>
+
+## Manage your passkeys
+
+View, rename, and remove your registered passkeys at any time from **Settings → Security → Passkeys**.
+
+| Action | How to do it |
+|---|---|
+| **View passkeys** | Navigate to **Settings → Security**. All registered passkeys are listed with their name and creation date. |
+| **Rename a passkey** | Click the **⋯** menu next to the passkey and select **Rename**. Enter a new name and save. |
+| **Remove a passkey** | Click the **⋯** menu next to the passkey and select **Remove**. Confirm the deletion in the dialog that appears. |
+
+<Warning>
+  Removing a passkey immediately revokes it. If you remove a passkey from a device you still use, you'll need to add a new one from that device before you can use passkey sign-in there again.
+</Warning>
+
+<Note>
+  If you lose access to all of your registered passkeys — for example, because you've replaced all your devices — you can always sign back in using your email address and password. Once signed in, go to **Settings → Security → Passkeys** to register a new passkey on your current device.
+</Note>

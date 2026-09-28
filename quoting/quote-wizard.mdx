@@ -1,0 +1,119 @@
+---
+title: "Create and Send a Quote with Quote Wizard"
+sidebarTitle: "Quote Wizard"
+description: "Follow the Quote Wizard step by step — from client context and product selection through pricing, approval, and delivering the finished quote to your client."
+---
+
+The Quote Wizard walks you through every stage of building a quote: starting from a client record, selecting products from your distributor catalogs or saved catalog, scoping quantities and terms, reviewing margin, handling approvals, and finally delivering the quote to your client. Each step in the wizard keeps context from the previous one, so you never lose your work mid-build.
+
+## Prerequisites
+
+Before you start the wizard, make sure you have:
+
+- At least one client record created in Scopable
+- A connected distributor integration (Pax8, Ingram Micro, TD SYNNEX, or CDW) for live pricing — the wizard works without one, but pricing will be manual
+- The appropriate permission to create quotes in your account
+
+<Tip>
+  Connect a distributor integration before opening the wizard. Live pricing and
+  availability pull directly into the product search step, saving you from
+  entering costs by hand.
+</Tip>
+
+## Build a Quote
+
+<Steps>
+  <Step title="Open a client record and start a new quote">
+    Navigate to **Clients** in the left sidebar and open the client record you
+    want to quote. Click **New Quote** in the top-right area of the client
+    record. The Quote Wizard opens with the client already attached — you won't
+    need to re-select it.
+  </Step>
+
+  <Step title="Choose your products">
+    Search for products by name, part number, or keyword. The search spans:
+
+    - Your **saved product catalog** (items you've already configured in Scopable)
+    - **Pax8** catalog (if connected)
+    - **Ingram Micro** catalog (if connected)
+    - **TD SYNNEX StreamOne Ion** (if connected)
+    - **CDW** (if connected)
+
+    Select each product you want to include. You can add multiple products
+    before moving to the next step. Use the **source filter** to narrow results
+    to a specific distributor or your own catalog.
+  </Step>
+
+  <Step title="Set scope">
+    For each product in your quote, configure:
+
+    - **Quantity** — units or seats needed
+    - **Term** — one-time, monthly, or annual
+    - **Description** — a client-facing line-item description that will appear on the delivered quote
+
+    You can also add section headers and narrative blocks here to group related
+    products and give the quote structure.
+  </Step>
+
+  <Step title="Review pricing">
+    The pricing review step shows your **cost**, **sell price**, and **margin**
+    side by side for every line item. Adjust sell prices to hit your target
+    margin. Items where margin falls below your configured threshold are
+    highlighted so you can address them before moving forward.
+
+    If any line item requires internal sign-off, flag it for approval at this
+    step. Flagged items are surfaced to approvers automatically when you submit.
+  </Step>
+
+  <Step title="Submit for approval (if required)">
+    If your account's permission settings require quote approval before sending,
+    the wizard routes the quote to the designated approver. You'll see the quote
+    status change to **Pending Approval**.
+
+    <Note>
+      You cannot deliver a quote to a client until it has been approved (when
+      approval is required). The approver receives a notification and can review
+      margin, pricing, and scope before approving or requesting changes.
+    </Note>
+
+    If approval is not required in your account, this step is skipped and you
+    move straight to delivery.
+  </Step>
+
+  <Step title="Deliver to your client">
+    Once the quote is approved (or if approval isn't required), choose how to
+    deliver it:
+
+    - **Send a link** — generates a unique, branded client-facing URL your client can view in their browser
+    - **Download a PDF** — renders the quote using your active Quote Designer template and downloads it for email or in-person delivery
+
+    The client quote link is live immediately after sending. You can track
+    whether the client has opened it from the quote record.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Duplicate a Quote"
+    icon="copy"
+    href="/quoting/duplicate-quotes"
+  >
+    Reuse an existing quote's products and scope to build a new draft in seconds.
+  </Card>
+  <Card
+    title="Products Page"
+    icon="magnifying-glass"
+    href="/quoting/products-page"
+  >
+    Search your full product catalog and all connected distributors in one place.
+  </Card>
+  <Card
+    title="Quote Designer"
+    icon="paintbrush"
+    href="/quoting/quote-designer"
+  >
+    Control the branded layout used for client links and PDF downloads.
+  </Card>
+</CardGroup>

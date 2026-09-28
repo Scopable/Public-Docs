@@ -1,0 +1,122 @@
+---
+title: "GET /v1/contacts/search — Search Contacts"
+sidebarTitle: "Search Contacts"
+description: "Search contacts by name or email across your entire tenant or scoped to a single client. Returns paginated results with cursor-based navigation."
+---
+
+The Search Contacts endpoint lets you find contacts by name or email address — either across your entire Scopable tenant or scoped to a specific client. Use it before creating a new contact to check for existing records, or to look up a contact's ID when you only have their name or email on hand. This endpoint requires the `contacts:read` scope.
+
+## Endpoint
+
+```
+GET https://api.scopable.io/v1/contacts/search
+```
+
+## Query Parameters
+
+<ParamField query="q" type="string" required>
+  The name or email address to search for. Scopable performs a case-insensitive prefix match on both `name` and `email` fields.
+</ParamField>
+
+<ParamField query="clientId" type="string">
+  When provided, limits results to contacts belonging to this client. Omit to search across all clients in your tenant.
+</ParamField>
+
+<ParamField query="limit" type="integer" default={50}>
+  Number of contacts to return per page. Must be between `1` and `200`. Defaults to `50`.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  Pagination cursor returned as `nextCursor` in a previous response. Omit to start from the first page.
+</ParamField>
+
+## Example Request
+
+```bash
+curl "https://api.scopable.io/v1/contacts/search?q=ada&clientId=3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84&limit=25" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+## Example Response
+
+```json
+{
+  "data": [
+    {
+      "id": "abc123",
+      "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+      "name": "Ada Lovelace",
+      "email": "[email protected]",
+      "phone": "+1-555-010-0002",
+      "title": "Technical Director",
+      "isDefault": true,
+      "archivedAt": null,
+      "createdAt": "2026-09-20T09:41:57Z",
+      "updatedAt": "2026-09-20T09:41:57Z"
+    }
+  ],
+  "nextCursor": null
+}
+```
+
+## Response Fields
+
+### Top-Level
+
+<ResponseField name="data" type="array" required>
+  Array of contact objects matching the search query.
+</ResponseField>
+
+<ResponseField name="nextCursor" type="string | null">
+  Opaque cursor string to pass as `cursor` on your next request. `null` when you have reached the last page of results.
+</ResponseField>
+
+### Contact Object
+
+<ResponseField name="id" type="string" required>
+  Unique UUID identifier for the contact within Scopable.
+</ResponseField>
+
+<ResponseField name="clientId" type="string" required>
+  UUID of the client this contact belongs to.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Full name of the contact.
+</ResponseField>
+
+<ResponseField name="email" type="string | null">
+  Email address of the contact.
+</ResponseField>
+
+<ResponseField name="phone" type="string | null">
+  Phone number of the contact.
+</ResponseField>
+
+<ResponseField name="title" type="string | null">
+  Job title of the contact.
+</ResponseField>
+
+<ResponseField name="isDefault" type="boolean" required>
+  Whether this contact is currently set as the client's default (primary) contact.
+</ResponseField>
+
+<ResponseField name="archivedAt" type="string | null">
+  ISO 8601 timestamp of when the contact was archived, or `null` if the contact is active.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string" required>
+  ISO 8601 timestamp of when the contact was created in Scopable.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string" required>
+  ISO 8601 timestamp of the most recent update to the contact record.
+</ResponseField>
+
+<Tip>
+  Search by email address before calling [Create Contact](/api-reference/contacts/create-contact) to avoid creating duplicate records. Scopable does not automatically deduplicate contacts on create.
+</Tip>
+
+## Archived Contacts
+
+By default, search results include only active (non-archived) contacts. Archived contacts have a non-null `archivedAt` value and are hidden from standard views in the Scopable app. To manage archived contacts, use the [Archive & Restore](/api-reference/contacts/archive-restore-contact) endpoints.

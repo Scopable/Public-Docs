@@ -1,0 +1,123 @@
+---
+title: "Troubleshoot Quote Designer Issues in Scopable"
+sidebarTitle: "Troubleshooting"
+description: "Resolve Quote Designer access errors, template loading failures, save problems, blank PDF previews, missing branding, and layout issues in the client quote link."
+---
+
+Most Quote Designer issues fall into a small set of categories: permission gaps, stale browser state, file format problems, or a template that was edited but not saved. Work through the relevant accordion below to find the fix for what you're seeing. If none of these resolve your issue, the support team can dig deeper.
+
+<AccordionGroup>
+  <Accordion title="I can't access Quote Designer">
+    Quote Designer is gated by the **Manage Tenant Settings** permission. If
+    you navigate to **Settings → Quote Designer** and see an access-denied
+    message, or if the Quote Designer option doesn't appear at all, your user
+    account doesn't have this permission.
+
+    **Fix:** Ask your Scopable Admin to grant you the Manage Tenant Settings
+    permission. Admins can update permissions from **Settings → Users &
+    Permissions → [your user] → Edit Permissions**.
+
+    If you are an Admin and still can't access Quote Designer, try signing out
+    and back in to refresh your session token, then check again.
+  </Accordion>
+
+  <Accordion title="A template won't load">
+    If the Quote Designer editor shows a spinner that never resolves, or a
+    template fails to open after clicking it, you're most likely looking at a
+    stale browser cache or a temporary session issue.
+
+    **Fix:** Perform a hard refresh to bypass the cache:
+
+    - **Mac:** `Cmd + Shift + R`
+    - **Windows / Linux:** `Ctrl + Shift + R`
+
+    If the template still won't load after a hard refresh, try opening it in a
+    private/incognito window. If it loads there, clear your browser's site data
+    for `app.scopable.io` and reload.
+
+    If the problem persists across browsers and devices, contact
+    [support@scopable.com](mailto:support@scopable.com) with your account name
+    and the name of the template that won't open.
+  </Accordion>
+
+  <Accordion title="I can't save template changes">
+    If the **Save Template** button is greyed out, produces an error, or
+    appears to save but changes don't persist, this is almost always a
+    permission issue.
+
+    **Fix:** Confirm that your user account has the **Manage Tenant Settings**
+    permission. View-only users can open and preview templates but cannot save
+    edits. Ask your Admin to elevate your permission level if you need editing
+    access.
+
+    If you have the right permission and saves still fail, check that you're
+    not hitting the issue with an unsupported logo file (see "PDF preview is
+    blank or broken" below), as an invalid asset can block the save operation.
+  </Accordion>
+
+  <Accordion title="PDF preview is blank or broken">
+    A blank, white, or partially rendered PDF preview is almost always caused
+    by a logo file that the PDF renderer can't process.
+
+    **Fix:** Make sure your logo file meets both requirements:
+
+    - **File size:** under 2 MB
+    - **File format:** PNG or SVG only (JPEG, WebP, and GIF are not supported in templates)
+
+    Replace the logo with a compliant file, save the template, and try
+    **Preview PDF** again. If the preview is still blank after fixing the logo,
+    ensure at least one flowing section (such as a line items table or scope
+    narrative) is added to the template — an empty template body can also cause
+    a blank render.
+  </Accordion>
+
+  <Accordion title="Branding colors aren't showing">
+    If your chosen brand color isn't appearing in the client link or PDF — for
+    example, headings are still rendering in the default color — the template
+    was likely not saved after the color was changed.
+
+    **Fix:** Open the template in Quote Designer, re-apply your brand color
+    (even if it looks correct), and click **Save Template** before previewing.
+    Color changes are not applied live to the rendered output until the template
+    is saved. After saving, generate a fresh PDF preview or reload the client
+    quote link to see the updated styling.
+  </Accordion>
+
+  <Accordion title="The quote layout looks wrong in the client link">
+    The public client quote link uses a **responsive web layout** that adapts
+    to the viewer's screen size — it is not a pixel-perfect replica of the PDF.
+    Wide tables may reflow on smaller screens, section spacing may differ, and
+    font sizing scales with the viewport. This is expected behavior.
+
+    **Fix:** If specific elements look broken (not just different), check:
+
+    - Long product names or descriptions that might overflow table cells — shorten them or add line breaks
+    - Scope narrative blocks with unformatted wall-of-text copy — break them into shorter paragraphs in the template editor
+
+    If the layout looks completely wrong — missing sections, garbled order, or
+    missing branding — confirm you saved the template after your last edit and
+    that the correct template is selected on the quote.
+  </Accordion>
+
+  <Accordion title="Line items are missing from the PDF">
+    If you preview the PDF and the line items table appears empty or is missing
+    entirely, the most common cause is that the quote itself has no products
+    added yet.
+
+    **Fix:** Open the quote linked to the template preview, confirm that at
+    least one product line item has been added to the quote, and then return to
+    Quote Designer to preview the PDF again. The template preview populates
+    from the quote's actual data — a quote with no products renders an empty
+    line items table.
+
+    If the quote has products and the table is still blank in the PDF, try
+    removing and re-adding the **Line items table** section in the template
+    editor, then save and preview again.
+  </Accordion>
+</AccordionGroup>
+
+## Still Stuck?
+
+If none of the above resolves your issue, contact the Scopable support team directly. Include your account name, the name of the affected template, and a description of what you're seeing — screenshots are helpful.
+
+**Email:** [support@scopable.com](mailto:support@scopable.com)

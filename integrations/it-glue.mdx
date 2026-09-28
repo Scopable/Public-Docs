@@ -1,0 +1,89 @@
+---
+title: "Connect IT Glue to Scopable (Beta)"
+sidebarTitle: "IT Glue"
+description: "Connect the IT Glue beta integration to pull organizations and configuration items into Scopable — create a read-only API key and confirm client mappings."
+---
+
+The IT Glue integration is currently in beta. It pulls your IT Glue organizations and configuration items into Scopable and links them to your existing client records, giving you documentation context alongside your quotes, assessments, and QBR work — all from a single workspace.
+
+<Warning>
+  **This integration is in beta.** It operates in read-only mode and never creates duplicates or modifies your IT Glue data. However, some edge cases — particularly unusual organization types or complex configuration structures — may require manual review after the initial sync. Check your client mappings carefully after connecting.
+</Warning>
+
+## What Syncs
+
+| IT Glue Entity | Where It Appears in Scopable |
+|---|---|
+| Organizations | Client mapping candidates |
+| Configuration items (devices, services) | Client → Configurations tab |
+
+<Note>
+  Not all IT Glue organization types are supported in the current beta. Unsupported organization types are silently skipped — they won't appear in client mappings or produce errors. Full organization type support will expand as the beta progresses.
+</Note>
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- An IT Glue account with API access enabled
+- Permission to create API keys in IT Glue
+- **Admin** permissions in Scopable (or the **Manage Tenant Settings** permission)
+
+## Step 1: Create a Read-Only API Key in IT Glue
+
+<Steps>
+  <Step title="Open IT Glue account settings">
+    In IT Glue, click your account name in the top-right corner and select **Account → Settings**.
+  </Step>
+  <Step title="Navigate to API Keys">
+    Select the **API Keys** tab.
+  </Step>
+  <Step title="Create a new API key">
+    Click **New API Key**. Give the key a descriptive name such as `Scopable Integration`.
+  </Step>
+  <Step title="Set the key type to Read Only">
+    Choose **Read Only** as the key type. This ensures Scopable can only retrieve data from IT Glue and cannot modify any records.
+  </Step>
+  <Step title="Copy the API key">
+    Copy the generated API key immediately. IT Glue displays the key only once at creation time. If you lose it, you'll need to create a new one.
+  </Step>
+</Steps>
+
+## Step 2: Connect IT Glue to Scopable
+
+<Steps>
+  <Step title="Open the integration settings">
+    In Scopable, go to **Settings → Integrations → IT Glue (Beta)** and click **Connect**.
+  </Step>
+  <Step title="Enter the API key">
+    Paste the read-only API key you copied from IT Glue into the **API Key** field.
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect**. Scopable validates the key and begins pulling your IT Glue organizations and configuration items.
+  </Step>
+  <Step title="Review client mappings">
+    Once the initial pull completes, navigate to **Settings → Integrations → IT Glue (Beta) → Client Mappings**. Review Scopable's auto-suggested matches, confirm correct ones, clear any incorrect suggestions, and manually map any organizations Scopable couldn't match. See [Client Mappings](/integrations/client-mappings) for full instructions.
+  </Step>
+</Steps>
+
+## Sync Frequency and Manual Re-sync
+
+IT Glue data syncs on a regular schedule. To pull the latest organizations and configurations immediately, go to **Settings → Integrations → IT Glue (Beta) → Sync Now**.
+
+## Beta Limitations
+
+<Accordion title="What organization types are not supported?">
+  The beta integration skips IT Glue organization types that fall outside the standard customer/client model. This includes certain partner or internal organization types. These are silently excluded from the sync — they won't appear in client mappings or generate errors. If you notice an organization is missing, check its type in IT Glue.
+</Accordion>
+
+<Accordion title="Configuration items aren't appearing for a client">
+  Configuration items only sync for organizations that have a confirmed client mapping. Confirm the mapping for the IT Glue organization first, then trigger a manual re-sync from **Settings → Integrations → IT Glue (Beta) → Sync Now**.
+</Accordion>
+
+<Accordion title="The integration connected successfully but some matches look wrong">
+  Beta auto-matching can be less precise than in production integrations. Go to **Settings → Integrations → IT Glue (Beta) → Client Mappings** and manually review all suggested matches before confirming them. You can clear and remap any incorrect links.
+</Accordion>
+
+## Feedback
+
+Because this integration is in beta, your feedback directly shapes its development. If you encounter unexpected behavior or missing functionality, contact [support@scopable.com](mailto:support@scopable.com) with details about your IT Glue setup and what you observed.

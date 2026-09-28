@@ -1,0 +1,77 @@
+---
+title: "Connect NinjaOne RMM to Scopable"
+sidebarTitle: "NinjaOne RMM"
+description: "Create read-only NinjaOne API credentials, connect the integration in Scopable, and map NinjaOne organizations to clients to pull in device inventory."
+---
+
+The NinjaOne integration pulls your managed organizations and device inventory into Scopable so you can see environment data alongside client records. Once mapped, NinjaOne device counts and configuration data are available in every client record, giving you the asset context you need to build accurate quotes and run informed QBRs — without switching between tools.
+
+## What Syncs
+
+| NinjaOne Entity | Where It Appears in Scopable |
+|---|---|
+| Organizations | Client mapping candidates |
+| Devices / configurations | Client → Configurations tab |
+
+<Note>
+  Scopable uses **read-only** credentials for NinjaOne. It never creates, modifies, or deletes organizations, devices, or any other records in your NinjaOne account.
+</Note>
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A NinjaOne account with permission to create API applications
+- **Admin** permissions in Scopable (or the **Manage Tenant Settings** permission)
+
+## Step 1: Create a Read-Only API Application in NinjaOne
+
+<Steps>
+  <Step title="Open the API management area">
+    In the NinjaOne administration portal, navigate to **Administration → Apps → API**.
+  </Step>
+  <Step title="Add a new application">
+    Click **Add Application**. Give it a recognizable name such as `Scopable Integration`.
+  </Step>
+  <Step title="Set the access level to Read Only">
+    When prompted for the application type or permission scope, choose **Read Only**. This ensures Scopable can only read your data.
+  </Step>
+  <Step title="Copy the credentials">
+    After saving, NinjaOne displays a **Client ID** and **Client Secret**. Copy both — the secret is only shown once. If you miss it, you'll need to regenerate it.
+  </Step>
+</Steps>
+
+## Step 2: Connect NinjaOne to Scopable
+
+<Steps>
+  <Step title="Open the integration settings">
+    In Scopable, go to **Settings → Integrations → NinjaOne RMM** and click **Connect**.
+  </Step>
+  <Step title="Enter your API credentials">
+    Enter the **Client ID** and **Client Secret** you copied from the NinjaOne API application.
+  </Step>
+  <Step title="Click Connect">
+    Click **Connect**. Scopable validates the credentials and immediately begins syncing your NinjaOne organizations and devices.
+  </Step>
+  <Step title="Review client mappings">
+    Once the initial sync finishes, go to **Settings → Integrations → NinjaOne RMM → Client Mappings**. Confirm that NinjaOne organizations have been matched to the correct Scopable clients. Organizations without a mapping won't sync device data into Scopable until you map them manually. See [Client Mappings](/integrations/client-mappings) for full instructions.
+  </Step>
+</Steps>
+
+## Sync Frequency and Manual Re-sync
+
+NinjaOne data syncs on a regular schedule. If you've recently onboarded a new client in NinjaOne or deployed new devices that you want available immediately, trigger a manual re-sync from **Settings → Integrations → NinjaOne RMM → Sync Now**.
+
+## Troubleshooting
+
+<Accordion title="Connection failed: invalid credentials">
+  Confirm you've entered the correct **Client ID** and **Client Secret**. Both values are case-sensitive. If you're not sure whether the secret is correct — for example, if it was copied with extra whitespace — regenerate the secret in **NinjaOne → Administration → Apps → API** and re-enter it in Scopable.
+</Accordion>
+
+<Accordion title="Organizations are not appearing in client mappings">
+  Only organizations in an **Active** state in NinjaOne are included in the sync. Archived or disabled organizations are skipped. Check the organization's status in NinjaOne if you expect it to appear but it doesn't.
+</Accordion>
+
+<Accordion title="Devices aren't showing on the client record">
+  Devices only sync for organizations that have a confirmed client mapping in Scopable. If the client's NinjaOne organization is still listed as **Unmapped**, confirm the mapping and then trigger a manual re-sync.
+</Accordion>

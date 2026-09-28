@@ -1,0 +1,125 @@
+---
+title: "Cursor-Based Pagination in the Scopable API"
+sidebarTitle: "Pagination"
+description: "Page through clients and contacts using the Scopable API's cursor pagination: pass a limit, read nextCursor, and repeat until nextCursor is null."
+---
+
+List and search endpoints in the Scopable API use cursor-based pagination — you pass a `limit` and receive a `nextCursor` to fetch the next page. Unlike page-number pagination, cursors remain stable even as records are added or removed between requests, so you never miss a record or see a duplicate mid-traversal.
+
+## How it works
+
+<Steps>
+  <Step title="Send your first request with a limit">
+    Add a `limit` query parameter to any list endpoint. Accepted values are `1` through `200`; the default is `50`.
+  </Step>
+  <Step title="Receive data and nextCursor">
+    The response body contains a `data` array of records and a `nextCursor` string. If `nextCursor` is `null`, you have received the last page.
+  </Step>
+  <Step title="Pass nextCursor to fetch the next page">
+    Add `cursor=<nextCursor value>` to your next request. Scopable will return the next batch of records starting from where the previous page left off.
+  </Step>
+  <Step title="Stop when nextCursor is null">
+    When the response includes `"nextCursor": null`, you have reached the end of the result set.
+  </Step>
+</Steps>
+
+## Paginating through all clients
+
+Here is a complete example that walks through an entire client list fifty records at a time.
+
+**First page — no cursor needed:**
+
+```bash
+curl "https://api.scopable.io/v1/clients?limit=50" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "data": [
+    { "id": "cli_01hx...", "name": "Acme Corp", ... },
+    { "id": "cli_01hy...", "name": "Globex Inc", ... }
+  ],
+  "nextCursor": "eyJ2IjoxfQ"
+}
+```
+
+**Next page — pass the cursor value:**
+
+```bash
+curl "https://api.scopable.io/v1/clients?limit=50&cursor=eyJ2IjoxfQ" \
+  -H "Authorization: Bearer $SCOPABLE_API_KEY"
+```
+
+Keep repeating this pattern, each time using the `nextCursor` from the previous response, until `nextCursor` is `null`.
+
+## Writing a full-traversal loop
+
+Most integrations need to process every record. The pattern is the same in any language: loop until `nextCursor` is absent or `null`.
+
+<CodeGroup>
+
+```python Python
+import os, requests
+
+url = "https://api.scopable.io/v1/clients"
+headers = {"Authorization": f"Bearer {os.environ['SCOPABLE_API_KEY']}"}
+params = {"limit": 50}
+
+while True:
+    response = requests.get(url, headers=headers, params=params).json()
+    for client in response["data"]:
+        print(client["id"], client["name"])
+
+    next_cursor = response.get("nextCursor")
+    if not next_cursor:
+        break
+    params["cursor"] = next_cursor
+```
+
+```javascript Node.js
+const API_KEY = process.env.SCOPABLE_API_KEY;
+const BASE = "https://api.scopable.io/v1/clients";
+
+async function fetchAllClients() {
+  let cursor = null;
+
+  do {
+    const url = new URL(BASE);
+    url.searchParams.set("limit", "50");
+    if (cursor) url.searchParams.set("cursor", cursor);
+
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${API_KEY}` },
+    });
+    const body = await res.json();
+
+    for (const client of body.data) {
+      console.log(client.id, client.name);
+    }
+
+    cursor = body.nextCursor;
+  } while (cursor);
+}
+
+fetchAllClients();
+```
+
+</CodeGroup>
+
+## Rules and constraints
+
+<Warning>
+  Always include the same filter parameters when continuing with a cursor. Changing filters mid-traversal (for example, adding a `search` query after the first page) returns a `validation_failed` error.
+</Warning>
+
+- **Treat cursors as opaque** — the cursor string is an internal token. Do not parse, decode, or modify it; its format may change without notice.
+- **Keep filters consistent** — every paginated request in a sequence must use the same query parameters (other than `cursor` and `limit`).
+- **Cursors are key-scoped** — a cursor issued to one API key cannot be used by a different API key, even within the same tenant.
+- **No page numbers** — the Scopable API does not support `page=` or `offset=` parameters. Cursor pagination is the only supported model.
+
+<Note>
+  Cursor pagination is stable under concurrent writes. If a new client is created after you begin paginating, it may or may not appear in your current traversal, but you will never receive a duplicate or skip an existing record.
+</Note>

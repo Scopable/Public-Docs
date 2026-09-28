@@ -1,0 +1,77 @@
+---
+title: "Manage Contacts, Favorites, and Photos in Scopable"
+sidebarTitle: "Contacts"
+description: "Find, update, and organize CRM contacts in Scopable — add photos, mark favorites, export records, and archive contacts you no longer need."
+---
+
+Contacts in Scopable represent the people at each of your client organizations. Every contact record stores the details you need for day-to-day communication — name, email, phone, title, and address — and stays in sync with your connected PSA so your data is always current.
+
+## Finding a Contact
+
+Use the search bar at the top of any client's **Contacts** tab to filter by name, email, or phone number in real time. For programmatic lookups, call the API endpoint `GET /v1/contacts/search` with a `q` query parameter to search across all contacts.
+
+```http title="Search contacts via API"
+GET https://api.scopable.io/v1/contacts/search?q=jane+doe
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Updating a Contact
+
+1. Open the client record and go to the **Contacts** tab.
+2. Click the contact row to open the detail panel.
+3. Edit any of the following fields: name, email, phone, title, or address.
+4. Click **Save** to apply your changes.
+
+<Note>
+  Changes you make to contact records in Scopable do not write back to your PSA. Updates sync from your PSA to Scopable, not the other way around.
+</Note>
+
+## Adding a Contact Photo
+
+1. Open the contact detail panel.
+2. Click the avatar placeholder in the top-left corner.
+3. Select a **JPG** or **PNG** file from your device (recommended: at least 200 × 200 px).
+4. Crop if prompted, then click **Save**.
+
+The photo appears in the contact list, the contact detail panel, and wherever that contact is referenced across Scopable.
+
+## Marking Favorites
+
+Click the **star icon** next to any contact to pin them to the top of the Contacts table. Favorites persist across sessions and are visible only to you — they do not affect other users' views.
+
+<Tip>
+  Mark your primary point of contact at each client as a favorite so they're always one click away when you're preparing a quote or QBR.
+</Tip>
+
+## Saving Table Views
+
+Configure the Contacts table with your preferred columns, filters, and sort order, then click **Save View** and give the view a name. Saved Views let you return to the exact configuration instantly. See the [Saved Views](/clients/saved-views) page for full details.
+
+## Exporting Contacts
+
+1. Open the **Contacts** tab on any client record.
+2. Apply any filters you want reflected in the export.
+3. Click **Export → CSV**.
+
+The download includes all visible columns for the filtered contact set.
+
+## Archiving vs. Deleting
+
+| Action | What happens |
+|---|---|
+| **Archive** | Hides the contact from active views; recoverable from the archived filter |
+| **Delete** | Permanently removes a manually created contact |
+
+<Warning>
+  Contacts synced from your PSA are never permanently deleted from Scopable. If a contact is removed in your PSA, it will be marked inactive during the next sync rather than deleted.
+</Warning>
+
+To archive a contact, open the contact detail panel → click the **⋯ menu** → **Archive**.
+
+## Default Contact
+
+The contact marked as **Default** on a client record appears on the client card and is pre-populated as the delivery recipient when you create a quote. To change the default, open the contact detail panel → toggle **Set as Default**.
+
+<Tip>
+  Keep your Default contact up to date — it's the name and email that show up first when your client receives a quote or assessment.
+</Tip>

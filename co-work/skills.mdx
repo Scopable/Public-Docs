@@ -1,0 +1,65 @@
+---
+title: "Use Skills to Focus Co-Work in Scopable"
+sidebarTitle: "Skills"
+description: "Skills give Co-Work focused instructions, context, and integration-connected capabilities — learn how to manage and apply them per conversation in Scopable."
+---
+
+Skills are focused instruction sets that shape how Co-Work behaves in a conversation. They give Co-Work additional context, constraints, or capabilities beyond its default behavior — letting you tailor the assistant to your specific workflow, client type, or compliance framework without reprompting every time.
+
+## Two Kinds of Skills
+
+<CardGroup cols={2}>
+  <Card title="Guidance Skills" icon="book-open">
+    Provide context or style instructions that influence how Co-Work responds. For example: *"always use NIST framework terminology"* or *"format all recommendations as bullet points."* Guidance skills shape the conversation without connecting to external systems.
+  </Card>
+  <Card title="Action Skills" icon="bolt">
+    Connect Co-Work to external systems or enable specific workflows — for example, pulling live asset data from your RMM, or retrieving open tickets from your PSA. Action skills require the relevant integration to be connected in Scopable.
+  </Card>
+</CardGroup>
+
+## Managing Skills
+
+Enable or disable skills at the account level from Settings:
+
+<Steps>
+  <Step title="Open Settings">
+    Click your account name or avatar → **Settings**.
+  </Step>
+  <Step title="Navigate to Co-Work Skills">
+    Go to **Co-Work → Skills**.
+  </Step>
+  <Step title="Enable or disable skills">
+    Toggle any skill on or off. Changes take effect for new conversations immediately. Active conversations are not affected until you toggle skills within the conversation itself.
+  </Step>
+</Steps>
+
+<Note>
+  Action skills require the relevant integration to be connected. If a required integration is missing, Co-Work will notify you in the conversation and link you to the integration settings page.
+</Note>
+
+## Using a Skill in a Conversation
+
+When you open or start a Co-Work conversation, any account-level skills that are enabled are active by default.
+
+- **Skills indicator**: conversations with one or more active skills show a **Skills** badge in the conversation header.
+- **Toggle per conversation**: click the Skills badge to open a panel showing which skills are active. Toggle individual skills on or off for this conversation without affecting the account default.
+
+This lets you run a conversation without a specific skill — for example, disabling a guidance skill when you want a general-purpose response — without permanently changing the account setting.
+
+<Tip>
+  Create a guidance skill for each compliance framework you work with — NIST CSF, CIS Controls, ISO 27001 — so Co-Work uses the right terminology automatically when you're working on a compliance-related conversation.
+</Tip>
+
+## Example Skills
+
+<Accordion title="NIST Terminology Guidance">
+  A guidance skill that instructs Co-Work to frame all security recommendations using NIST CSF categories (Identify, Protect, Detect, Respond, Recover) and use NIST terminology throughout responses.
+</Accordion>
+
+<Accordion title="RMM Asset Lookup (Action)">
+  An action skill that lets Co-Work query your connected RMM for live asset and configuration data when answering questions about a client's environment. Requires NinjaOne or Liongard to be connected.
+</Accordion>
+
+<Accordion title="PSA Ticket Context (Action)">
+  An action skill that pulls recent open tickets from your connected PSA into Co-Work's context, so it can reference current service activity when helping you prepare for a client meeting or QBR. Requires ConnectWise Manage or Halo PSA.
+</Accordion>

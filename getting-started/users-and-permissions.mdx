@@ -1,0 +1,91 @@
+---
+title: "Manage Users and Quote Permissions in Scopable"
+sidebarTitle: "Users & Permissions"
+description: "Invite team members, assign Admin or standard roles, and configure permission groups to control quoting, approvals, and integration access in Scopable."
+---
+
+Scopable's permissions system lets you control exactly what each team member can see and do — from editing quote pricing to approving deals and managing integrations. Understanding roles and permission groups before you invite your team ensures everyone has the right level of access from day one.
+
+## Permission levels
+
+Every Scopable user is either an **Admin** or a **standard user**. Admins have unrestricted access to the entire platform, while standard users operate within the boundaries of their assigned permission group.
+
+| Role | Description |
+|---|---|
+| **Admin** | Full access to all settings, integrations, billing, and workspace configuration. Suitable for account owners and senior operations staff. |
+| **Standard user** | Access is determined by their assigned permission group. Suitable for technicians, account managers, and vCIOs. |
+
+<Note>
+  Only Admins can connect or disconnect integrations (ConnectWise Manage, Pax8, Microsoft 365, and others) and manage your Scopable billing subscription.
+</Note>
+
+## Key permissions
+
+The table below describes the most important individual permissions you can enable or disable within a permission group.
+
+| Permission | What it controls |
+|---|---|
+| **Manage Tenant Settings** | Allows the user to update workspace name, branding, and global defaults. |
+| **View Integrations** | Allows the user to see connected integrations and their sync status (but not configure them). |
+| **Change quote pricing** | Allows the user to edit line-item prices and margins on a quote. |
+| **Approve quotes** | Allows the user to move a quote into the *Approved* state before it is sent to a client. |
+| **Mark quotes as won** | Allows the user to close a quote as *Won* and trigger any downstream actions such as PSA ticket creation. |
+
+## Invite a user
+
+<Steps>
+  <Step title="Open the Users settings">
+    In the left-hand navigation, click your workspace name or avatar, then go to **Settings → Users**.
+  </Step>
+  <Step title="Click Invite user">
+    Click the **Invite user** button in the top-right corner of the Users page.
+  </Step>
+  <Step title="Enter the user's email address">
+    Type the email address of the person you want to invite. Scopable sends them an invitation email with a link to set up their account.
+  </Step>
+  <Step title="Choose a permission group">
+    Select a permission group from the dropdown. This determines what the new user can access once they accept the invitation. If you haven't created custom groups yet, the default **Standard** group is a safe starting point.
+  </Step>
+  <Step title="Send the invitation">
+    Click **Send invite**. The user appears in your Users list with a *Pending* status until they accept.
+  </Step>
+</Steps>
+
+## Permission groups
+
+Permission groups are named bundles of individual permissions that you can assign to multiple users at once. Instead of configuring every user individually, you create a group — for example, *Account Manager* or *vCIO* — and assign all relevant users to it. Changing the group's permissions then updates every member automatically.
+
+### Create a permission group
+
+<Steps>
+  <Step title="Go to Permission Groups">
+    Navigate to **Settings → Permission Groups** and click **New group**.
+  </Step>
+  <Step title="Name the group">
+    Give the group a descriptive name that reflects the role, such as *Quoting Specialist* or *Read Only*.
+  </Step>
+  <Step title="Toggle individual permissions">
+    Enable or disable each permission using the toggle switches. Changes take effect immediately for all users assigned to the group.
+  </Step>
+  <Step title="Assign users">
+    Return to **Settings → Users**, click a user's name, and change their **Permission group** to the new group.
+  </Step>
+</Steps>
+
+<Tip>
+  Create a read-only group for executive stakeholders who need visibility into quotes and clients without the ability to make changes.
+</Tip>
+
+## Frequently asked questions
+
+<Accordion title="Can I have multiple Admins?">
+  Yes. There is no limit on the number of Admin users in a Scopable workspace. We recommend keeping the Admin role limited to people who genuinely need to manage integrations and billing, and using permission groups for everyone else.
+</Accordion>
+
+<Accordion title="What happens if I remove a user?">
+  Removing a user immediately revokes their access to the workspace. Their existing work — quotes, notes, and activity — is preserved and remains visible in Scopable. You can re-invite the same email address at any time to restore access.
+</Accordion>
+
+<Accordion title="Can I change a user's permission group after they've accepted their invitation?">
+  Yes. Go to **Settings → Users**, click the user's name, and select a different permission group from the dropdown. The change takes effect the next time they load or refresh the app.
+</Accordion>

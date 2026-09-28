@@ -1,0 +1,89 @@
+---
+title: "Scopable Outbound Webhooks Overview"
+sidebarTitle: "Overview"
+description: "Configure HTTPS webhook endpoints in Settings › Developer to receive HMAC-signed payloads whenever client or contact records change in your tenant."
+---
+
+Scopable outbound webhooks push real-time notifications to your HTTPS endpoint whenever a client or contact changes in your tenant — so you don't have to poll the API to detect updates. Every payload is signed with HMAC-SHA256 so you can verify it genuinely came from Scopable before processing it.
+
+## Configuring a Webhook Endpoint
+
+<Steps>
+  <Step title="Open Developer Settings">
+    In the Scopable app, navigate to **Settings → Developer → Webhooks**.
+  </Step>
+  <Step title="Add a New Endpoint">
+    Click **Add Endpoint** and enter your publicly accessible HTTPS URL. Scopable cannot deliver webhooks to `localhost` or private IP addresses.
+  </Step>
+  <Step title="Select Events">
+    Choose which events should trigger delivery to this endpoint. You can subscribe to individual events or select all.
+  </Step>
+  <Step title="Save">
+    Click **Save**. Scopable immediately begins delivering matching events to your endpoint.
+  </Step>
+</Steps>
+
+<Note>
+  Your endpoint must be reachable over HTTPS and return a `2xx` status code within **10 seconds**. If it doesn't, Scopable marks the delivery as failed and retries it automatically with exponential backoff.
+</Note>
+
+## Supported Events
+
+| Event | When it fires |
+|---|---|
+| `client.updated` | A client's fields are updated in your tenant |
+| `contact.created` | A new contact is created under any client |
+| `contact.updated` | A contact's fields are updated |
+| `contact.archived` | A contact is archived |
+| `contact.restored` | An archived contact is restored to active status |
+
+## Payload Structure
+
+Every webhook delivery is an HTTP `POST` request to your endpoint with a `Content-Type: application/json` header and a JSON body with the following shape:
+
+```json
+{
+  "event": "contact.created",
+  "data": {
+    "id": "abc123",
+    "clientId": "3f0c2a4e-8d1b-4c6a-9e2f-5b7d1a0c9e84",
+    "name": "Ada Lovelace",
+    "email": "[email protected]",
+    "phone": null,
+    "title": null,
+    "isDefault": true,
+    "archivedAt": null,
+    "createdAt": "2026-09-20T09:41:57Z",
+    "updatedAt": "2026-09-20T09:41:57Z"
+  },
+  "timestamp": "2026-09-20T09:41:58Z"
+}
+```
+
+### Payload Fields
+
+<ResponseField name="event" type="string" required>
+  The event type that triggered this delivery. One of the supported event names listed above.
+</ResponseField>
+
+<ResponseField name="data" type="object" required>
+  The full object that changed. For `client.*` events this is a [client object](/api-reference/clients/list-clients#client-object); for `contact.*` events this is a [contact object](/api-reference/contacts/search-contacts#contact-object).
+</ResponseField>
+
+<ResponseField name="timestamp" type="string" required>
+  ISO 8601 timestamp indicating when Scopable generated this payload — typically within milliseconds of the change.
+</ResponseField>
+
+## Signature Verification
+
+Every webhook request includes an `X-Scopable-Signature` header containing an HMAC-SHA256 hex digest of the raw request body, signed with your endpoint's webhook secret. Always verify this signature before processing the payload.
+
+See [Verify Webhook Signatures](/api-reference/webhooks/verification) for step-by-step instructions and code examples in Node.js, Python, and Ruby.
+
+## Retries and Failure Handling
+
+If your endpoint returns a non-`2xx` status or does not respond within 10 seconds, Scopable retries the delivery with exponential backoff. Design your endpoint to be **idempotent** — it may receive the same event payload more than once in the event of a retry. Use the `timestamp` and the `data.id` field together to detect duplicates if needed.
+
+<Tip>
+  Respond with `200 OK` immediately and process the payload asynchronously (e.g., enqueue it to a background job) to stay well within the 10-second response window.
+</Tip>
