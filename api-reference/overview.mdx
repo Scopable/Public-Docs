@@ -1,5 +1,5 @@
 ---
-title: "Scopable REST API Overview"
+title: "Scopable REST API — Overview and Quick Start Guide"
 sidebarTitle: "Overview"
 description: "The Scopable /v1 REST API lets any external system, script, or automation tool read and write your CRM clients and contacts over HTTPS."
 ---
@@ -10,10 +10,28 @@ The Scopable API is a versioned REST surface — base URL `https://api.scopable.
 
 The current API surface covers your core client and contact data:
 
-- **Read and list clients** — fetch a single client by ID or page through your full client list with cursor pagination
-- **Update client fields** — patch a client's name, website, phone number, and address
-- **Create, update, archive, and restore contacts** — manage the people associated with each client record
-- **Receive outbound webhooks** — subscribe to HMAC-signed event notifications whenever a client or contact changes
+**Clients**
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/v1/clients` | List all clients with cursor pagination |
+| `GET` | `/v1/clients/{clientId}` | Get a single client by ID |
+| `POST` | `/v1/clients/{clientId}` | Update a client's fields |
+
+**Contacts**
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/v1/contacts/search` | Search contacts by name or email, optionally scoped to a client |
+| `POST` | `/v1/contacts` | Create a new contact |
+| `POST` | `/v1/contacts/{contactId}` | Update a contact's fields |
+| `POST` | `/v1/contacts/{contactId}/archive` | Archive a contact |
+| `POST` | `/v1/contacts/{contactId}/restore` | Restore an archived contact |
+| `POST` | `/v1/contacts/{contactId}/set-default` | Make a contact the client's default |
+
+**Webhooks**
+
+- **Outbound HMAC-signed webhooks** — subscribe to `client.updated` and `contact.*` event notifications delivered to your endpoint whenever client or contact data changes
 
 ## What's not yet available
 

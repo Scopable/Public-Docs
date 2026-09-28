@@ -1,5 +1,5 @@
 ---
-title: "Connect NinjaOne RMM to Scopable"
+title: "Connect NinjaOne RMM to Scopable — RMM Device Sync"
 sidebarTitle: "NinjaOne RMM"
 description: "Create read-only NinjaOne API credentials, connect the integration in Scopable, and map NinjaOne organizations to clients to pull in device inventory."
 ---
@@ -26,6 +26,8 @@ Before you begin, make sure you have:
 
 ## Step 1: Create a Read-Only API Application in NinjaOne
 
+Before connecting in Scopable, create a dedicated read-only API application in your NinjaOne administration portal to generate the credentials Scopable needs.
+
 <Steps>
   <Step title="Open the API management area">
     In the NinjaOne administration portal, navigate to **Administration → Apps → API**.
@@ -42,6 +44,8 @@ Before you begin, make sure you have:
 </Steps>
 
 ## Step 2: Connect NinjaOne to Scopable
+
+With your Client ID and Secret copied from NinjaOne, authenticate the integration in Scopable and confirm your client mappings.
 
 <Steps>
   <Step title="Open the integration settings">

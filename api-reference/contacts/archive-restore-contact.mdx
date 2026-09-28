@@ -1,5 +1,5 @@
 ---
-title: "Archive and Restore Contacts via the Scopable API"
+title: "Archive, Restore, and Set Default Contacts | Scopable"
 sidebarTitle: "Archive & Restore"
 description: "Archive hides a contact from active views and clears its default flag. Restore brings it back. Neither action permanently deletes PSA-synced contacts."
 ---
@@ -8,11 +8,11 @@ Scopable uses archiving rather than deletion to manage contacts you no longer wa
 
 ## Archive a Contact
 
-Archiving hides the contact from active client views, removes it as the client's default contact (if applicable), and sets its `archivedAt` timestamp. The contact remains in Scopable's database and can be restored at any time.
+Archiving hides the contact from active client views, removes it as the client's default contact (if applicable), and sets its `archivedAt` timestamp. The contact remains in Scopable and can be restored at any time.
 
 ### Endpoint
 
-```
+```http
 POST https://api.scopable.io/v1/contacts/{contactId}/archive
 ```
 
@@ -57,7 +57,7 @@ Restoring brings an archived contact back to active status. Its `archivedAt` fie
 
 ### Endpoint
 
-```
+```http
 POST https://api.scopable.io/v1/contacts/{contactId}/restore
 ```
 
@@ -102,7 +102,7 @@ Promote a contact to the client's primary contact. If another contact is current
 
 ### Endpoint
 
-```
+```http
 POST https://api.scopable.io/v1/contacts/{contactId}/set-default
 ```
 

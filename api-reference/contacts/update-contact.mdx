@@ -1,14 +1,14 @@
 ---
-title: "POST /v1/contacts/{contactId} — Update a Contact"
+title: "Update Contact Fields — POST /v1/contacts | Scopable"
 sidebarTitle: "Update Contact"
-description: "Update fields on an existing contact. Omit a field to leave it unchanged, or send it as null to clear its stored value entirely."
+description: "Update fields on an existing Scopable contact. Omit a field to leave it unchanged, or send it as null to clear its stored value entirely."
 ---
 
 The Update Contact endpoint modifies one or more fields on an existing contact record. Send only the fields you want to change — any field you omit stays exactly as it is. To erase a field's current value, send it explicitly as `null`. This endpoint requires the `contacts:write` scope and an `Idempotency-Key` header on every request.
 
 ## Endpoint
 
-```
+```http
 POST https://api.scopable.io/v1/contacts/{contactId}
 ```
 
@@ -123,7 +123,7 @@ curl -X POST "https://api.scopable.io/v1/contacts/abc123" \
 
 Beyond updating fields, three additional POST endpoints let you manage a contact's status and default assignment:
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card title="Set as Default" icon="star">
     **`POST /v1/contacts/{contactId}/set-default`**
 
@@ -134,9 +134,6 @@ Beyond updating fields, three additional POST endpoints let you manage a contact
 
     Hides the contact from active views and clears its default-contact flag if set. See [Archive & Restore](/api-reference/contacts/archive-restore-contact).
   </Card>
-</CardGroup>
-
-<CardGroup cols={2}>
   <Card title="Restore Contact" icon="rotate-left">
     **`POST /v1/contacts/{contactId}/restore`**
 

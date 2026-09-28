@@ -1,5 +1,5 @@
 ---
-title: "Error Codes and Handling in the Scopable API"
+title: "Scopable API Error Codes, Rate Limits, and Retries"
 sidebarTitle: "Errors"
 description: "Every Scopable API error uses the same JSON envelope. Learn every error code, its HTTP status, and the right way to handle each one in your integration."
 ---
@@ -26,8 +26,10 @@ All error responses — regardless of HTTP status code — use this structure:
 | `message` | string | Human-readable description of what went wrong |
 | `requestId` | string | Unique ID for this request — matches the `X-Request-Id` response header |
 
+Every Scopable API response — whether a success or an error — includes an `X-Request-Id` header whose value is identical to `error.requestId` in error payloads. Record this header in your logs for every request so you can correlate client-side errors with server-side traces.
+
 <Tip>
-  The `requestId` value is identical to the `X-Request-Id` header on every response, success or error. Include it in any support ticket or bug report you file with [support@scopable.com](mailto:support@scopable.com) so the team can locate the exact request in logs.
+  Include the `X-Request-Id` value (or the `error.requestId` from the body) in any support ticket or bug report you file with [support@scopable.com](mailto:support@scopable.com) so the team can locate the exact request in logs.
 </Tip>
 
 ## Error codes
