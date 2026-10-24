@@ -10,13 +10,14 @@
   "favicon": "/favicon.svg",
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "https://scopable.io/docs"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@scopable.com"
+        "href": "mailto:support@scopable.io"
       }
     ],
     "primary": {
@@ -25,6 +26,596 @@
       "href": "https://app.scopable.io/login"
     }
   },
+  "banner": {
+    "content": "These docs moved to [scopable.io/docs](https://scopable.io/docs).",
+    "dismissible": false,
+    "type": "warning"
+  },
+  "seo": {
+    "metatags": {
+      "robots": "noindex, nofollow"
+    }
+  },
+  "markdown": {
+    "instructions": [
+      "These Mintlify docs are retired. The canonical developer home is https://scopable.io/docs.",
+      "The Scopable product MCP server is https://mcp.scopable.io/mcp. Read https://scopable.io/mcp and https://scopable.io/docs/scopable-mcp-guide. Do not use the hosted Scopable Docs MCP on this Mintlify domain.",
+      "The REST API index is https://scopable.io/developers, the endpoint reference is https://scopable.io/api, and the OpenAPI document is https://scopable.io/openapi.json.",
+      "Support is support@scopable.io."
+    ]
+  },
+  "contextual": {
+    "options": [
+      "copy"
+    ]
+  },
+  "errors": {
+    "404": {
+      "redirect": false
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/introduction",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/introduction.md",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/account-setup",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/account-setup.md",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/users-and-permissions",
+      "destination": "https://scopable.io/docs/manage-users-and-permissions",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/users-and-permissions.md",
+      "destination": "https://scopable.io/docs/manage-users-and-permissions",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/passkeys",
+      "destination": "https://scopable.io/docs/passkeys-sign-in",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/passkeys.md",
+      "destination": "https://scopable.io/docs/passkeys-sign-in",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-wizard",
+      "destination": "https://scopable.io/docs/quote-wizard",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-wizard.md",
+      "destination": "https://scopable.io/docs/quote-wizard",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/duplicate-quotes",
+      "destination": "https://scopable.io/docs/duplicate-quotes",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/duplicate-quotes.md",
+      "destination": "https://scopable.io/docs/duplicate-quotes",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/products-page",
+      "destination": "https://scopable.io/docs/products-page-search",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/products-page.md",
+      "destination": "https://scopable.io/docs/products-page-search",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-designer",
+      "destination": "https://scopable.io/docs/quote-designer",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-designer.md",
+      "destination": "https://scopable.io/docs/quote-designer",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-designer-templates",
+      "destination": "https://scopable.io/docs/quote-designer-build-template",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/quote-designer-templates.md",
+      "destination": "https://scopable.io/docs/quote-designer-build-template",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/troubleshooting",
+      "destination": "https://scopable.io/docs/quote-designer-troubleshooting",
+      "permanent": true
+    },
+    {
+      "source": "/quoting/troubleshooting.md",
+      "destination": "https://scopable.io/docs/quote-designer-troubleshooting",
+      "permanent": true
+    },
+    {
+      "source": "/clients/contacts",
+      "destination": "https://scopable.io/docs/manage-contacts",
+      "permanent": true
+    },
+    {
+      "source": "/clients/contacts.md",
+      "destination": "https://scopable.io/docs/manage-contacts",
+      "permanent": true
+    },
+    {
+      "source": "/clients/agreements",
+      "destination": "https://scopable.io/docs/agreements-table",
+      "permanent": true
+    },
+    {
+      "source": "/clients/agreements.md",
+      "destination": "https://scopable.io/docs/agreements-table",
+      "permanent": true
+    },
+    {
+      "source": "/clients/saved-views",
+      "destination": "https://scopable.io/docs/saved-views",
+      "permanent": true
+    },
+    {
+      "source": "/clients/saved-views.md",
+      "destination": "https://scopable.io/docs/saved-views",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/overview",
+      "destination": "https://scopable.io/docs/co-work-conversations",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/overview.md",
+      "destination": "https://scopable.io/docs/co-work-conversations",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/conversations",
+      "destination": "https://scopable.io/docs/co-work-conversations",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/conversations.md",
+      "destination": "https://scopable.io/docs/co-work-conversations",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/skills",
+      "destination": "https://scopable.io/docs/co-work-skills",
+      "permanent": true
+    },
+    {
+      "source": "/co-work/skills.md",
+      "destination": "https://scopable.io/docs/co-work-skills",
+      "permanent": true
+    },
+    {
+      "source": "/automations/workflows",
+      "destination": "https://scopable.io/docs/workflows",
+      "permanent": true
+    },
+    {
+      "source": "/automations/workflows.md",
+      "destination": "https://scopable.io/docs/workflows",
+      "permanent": true
+    },
+    {
+      "source": "/billing/billing-setup",
+      "destination": "https://scopable.io/docs/billing-setup",
+      "permanent": true
+    },
+    {
+      "source": "/billing/billing-setup.md",
+      "destination": "https://scopable.io/docs/billing-setup",
+      "permanent": true
+    },
+    {
+      "source": "/billing/subscription",
+      "destination": "https://scopable.io/docs/billing-and-subscription",
+      "permanent": true
+    },
+    {
+      "source": "/billing/subscription.md",
+      "destination": "https://scopable.io/docs/billing-and-subscription",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/overview",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/overview.md",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/client-mappings",
+      "destination": "https://scopable.io/docs/client-mappings",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/client-mappings.md",
+      "destination": "https://scopable.io/docs/client-mappings",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/connectwise-manage",
+      "destination": "https://scopable.io/docs/connectwise-manage-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/connectwise-manage.md",
+      "destination": "https://scopable.io/docs/connectwise-manage-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/halo-psa",
+      "destination": "https://scopable.io/docs/halo-psa-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/halo-psa.md",
+      "destination": "https://scopable.io/docs/halo-psa-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/ninjaone-rmm",
+      "destination": "https://scopable.io/docs/ninjaone-rmm-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/ninjaone-rmm.md",
+      "destination": "https://scopable.io/docs/ninjaone-rmm-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/liongard",
+      "destination": "https://scopable.io/docs/liongard-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/liongard.md",
+      "destination": "https://scopable.io/docs/liongard-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/it-glue",
+      "destination": "https://scopable.io/docs/it-glue-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/it-glue.md",
+      "destination": "https://scopable.io/docs/it-glue-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/microsoft-365",
+      "destination": "https://scopable.io/docs/microsoft-365-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/microsoft-365.md",
+      "destination": "https://scopable.io/docs/microsoft-365-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/azure-partner-center",
+      "destination": "https://scopable.io/docs/azure-partner-center-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/azure-partner-center.md",
+      "destination": "https://scopable.io/docs/azure-partner-center-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/pax8",
+      "destination": "https://scopable.io/docs/pax8-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/pax8.md",
+      "destination": "https://scopable.io/docs/pax8-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/ingram-micro",
+      "destination": "https://scopable.io/docs/ingram-micro-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/ingram-micro.md",
+      "destination": "https://scopable.io/docs/ingram-micro-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/td-synnex",
+      "destination": "https://scopable.io/docs/tdsynnex-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/td-synnex.md",
+      "destination": "https://scopable.io/docs/tdsynnex-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/cdw",
+      "destination": "https://scopable.io/docs/cdw-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/cdw.md",
+      "destination": "https://scopable.io/docs/cdw-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/simplesat",
+      "destination": "https://scopable.io/docs/simplesat-setup",
+      "permanent": true
+    },
+    {
+      "source": "/integrations/simplesat.md",
+      "destination": "https://scopable.io/docs/simplesat-setup",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/overview",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/overview.md",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/authentication",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/authentication.md",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/pagination",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/pagination.md",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/idempotency",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/idempotency.md",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/errors",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/errors.md",
+      "destination": "https://scopable.io/docs/scopable-api-getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/list-clients",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/list-clients.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/get-client",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/get-client.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/update-client",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/clients/update-client.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/search-contacts",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/search-contacts.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/create-contact",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/create-contact.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/update-contact",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/update-contact.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/archive-restore-contact",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/contacts/archive-restore-contact.md",
+      "destination": "https://scopable.io/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/webhooks/overview",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/webhooks/overview.md",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/webhooks/verification",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/api-reference/webhooks/verification.md",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/mcp",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/authed/mcp",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/mcp",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/mcp.json",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/mcp/server-card.json",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/mcp/server-cards.json",
+      "destination": "https://scopable.io/mcp",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/api-catalog",
+      "destination": "https://scopable.io/openapi.json",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/agent-card.json",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/agent-skills/index.json",
+      "destination": "https://scopable.io/developers",
+      "permanent": true
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "https://scopable.io/llms.txt",
+      "permanent": true
+    },
+    {
+      "source": "/llms-full.txt",
+      "destination": "https://scopable.io/llms.txt",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/llms.txt",
+      "destination": "https://scopable.io/llms.txt",
+      "permanent": true
+    },
+    {
+      "source": "/.well-known/llms-full.txt",
+      "destination": "https://scopable.io/llms.txt",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://scopable.io/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "https://scopable.io/robots.txt",
+      "permanent": true
+    },
+    {
+      "source": "/:slug*",
+      "destination": "https://scopable.io/docs",
+      "permanent": true
+    }
+  ],
   "navigation": {
     "tabs": [
       {
